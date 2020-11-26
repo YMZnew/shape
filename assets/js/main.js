@@ -30,6 +30,21 @@ function startWebcam() {
 			});
 	}
 	video.autoplay = true;
+
+	video.style.display = 'initial';
+
+	/* set canvas size based on the image container */
+	outputCanvas.setAttribute('width', video.offsetWidth);
+	outputCanvas.setAttribute('height', video.offsetHeight);
+
+	// console.log(video.offsetWidth);
+	// console.log(video.offsetHeight);
+
+	/* button view style */
+	startBtn.innerHTML = 'Start Processing';
+	startBtn.style.cursor = 'pointer';
+	startBtn.disabled = false;
+	outputCanvas.style.display = 'none';
 }
 
 /* change video src to selected video file src */
