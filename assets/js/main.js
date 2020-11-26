@@ -1,0 +1,420 @@
+let isImageSet = false;
+const imageFile = document.getElementById('imageFile');
+const img = document.getElementById('image');
+const startBtn = document.querySelector('.start-button');
+const outputCanvas = document.getElementById('output-canvas');
+
+outputCanvas.style.border = '1px solid #3e3e3e2e';
+
+/* select image file */
+imageFile.addEventListener(
+	'change',
+	function () {
+		isImageSet = true;
+		for (let i = 0; i < imageFile.files.length; i++) {
+			img.src = URL.createObjectURL(this.files[i]);
+			img.style.display = 'initial';
+
+			/* button view style */
+			startBtn.innerHTML = 'Start Processing';
+			startBtn.style.cursor = 'pointer';
+			startBtn.disabled = false;
+			outputCanvas.style.display = 'none';
+		}
+	},
+	false
+);
+
+/* put the image on canvas to work on */
+img.onload = function () {
+	/* set canvas size based on the image container */
+	outputCanvas.setAttribute('width', img.offsetWidth);
+	outputCanvas.setAttribute('height', img.offsetHeight);
+	// outputCanvas.style.display = 'initial';
+
+	const mat = cv.imread(img);
+	cv.imshow('output-canvas', mat);
+	mat.delete();
+};
+
+/* opencv load status log */
+function onOpenCvReady() {
+	console.log('OpenCV.js is ready.');
+}
+
+/* ----------------------------------------------- */
+/* ---------- Color Detection functions ---------- */
+
+/* convert rgb color to hsl */
+function convertToHsl(rgbColorCode) {
+	const r = Number(rgbColorCode.r) / 255;
+	const g = Number(rgbColorCode.g) / 255;
+	const b = Number(rgbColorCode.b) / 255;
+	const maxColorValue = Math.max(r, g, b);
+	const minColorValue = Math.min(r, g, b);
+	let H = 0;
+	let S = 0;
+	let L = (maxColorValue + minColorValue) / 2;
+
+	if (maxColorValue != minColorValue) {
+		if (L < 0.5) {
+			S =
+				(maxColorValue - minColorValue) /
+				(maxColorValue + minColorValue);
+		} else {
+			S =
+				(maxColorValue - minColorValue) /
+				(2.0 - maxColorValue - minColorValue);
+		}
+		if (r == maxColorValue) {
+			H = (g - b) / (maxColorValue - minColorValue);
+		} else if (g == maxColorValue) {
+			H = 2.0 + (b - r) / (maxColorValue - minColorValue);
+		} else {
+			H = 4.0 + (r - g) / (maxColorValue - minColorValue);
+		}
+	}
+
+	H = H * 60;
+	S = S * 100;
+	L = L * 100;
+
+	if (H < 0) {
+		H += 360;
+	}
+
+	const hslColorCode = { h: H, s: S, l: L };
+
+	return hslColorCode;
+}
+
+/* get the base color name */
+function getBaseColorName(hsl) {
+	const h = Math.floor(hsl.h);
+	const s = Math.floor(hsl.s);
+	const l = Math.floor(hsl.l);
+
+	if (l >= 95 || (s <= 10 && l >= 90)) {
+		return 'White';
+	} else if (l <= 5 || (h <= 15 && s <= 15 && l <= 15)) {
+		return 'Black';
+	} else if ((s <= 10 && l <= 70) || s === 0) {
+		return 'Gray';
+	} else if ((h >= 0 && h <= 15) || h >= 346) {
+		return 'Red';
+	} else if (h >= 45 && h <= 65) {
+		if (s > 90 && l >= 45 && l <= 85) {
+			return 'Yellow';
+		}
+	} else if (h >= 15 && h <= 50) {
+		if (s < 90 && l <= 40) {
+			return 'Brown';
+		} else {
+			return 'Orange';
+		}
+	} else if (h >= 55 && h <= 165) {
+		return 'Green';
+	} else if (h >= 166 && h <= 260) {
+		return 'Blue';
+	} else if (h >= 261 && h <= 290) {
+		return 'Purple';
+	} else if (h >= 291 && h <= 345) {
+		return 'Pink';
+	}
+}
+
+/* get intensity of the color */
+function getColorIntensity(rgbColorCode) {
+	let hex = '';
+	hex += Number(rgbColorCode.r).toString(16);
+	hex += Number(rgbColorCode.g).toString(16);
+	hex += Number(rgbColorCode.b).toString(16);
+	let intensity = '';
+	const rgb = parseInt(hex, 16);
+	const r = (rgb >> 16) & 0xff;
+	const g = (rgb >> 8) & 0xff;
+	const b = (rgb >> 0) & 0xff;
+	const intensityValue = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+	if (intensityValue >= 80 && intensityValue <= 100) {
+		intensity = 'Semi dark';
+	} else if (intensityValue < 40) {
+		intensity = 'Dark';
+	} else {
+		intensity = 'Light';
+	}
+	return intensity;
+}
+
+/* determine color name from color code */
+function determineColor(rgbColorCode) {
+	const colorName =
+		getColorIntensity(rgbColorCode) +
+		'_' +
+		getBaseColorName(convertToHsl(rgbColorCode));
+
+	// console.log(colorName);
+
+	return colorName;
+}
+
+/* detect color of the object */
+function detectColor(src, contours, cntIndex, cnt) {
+	let mask = cv.Mat.zeros(src.rows, src.cols, cv.CV_8U);
+
+	/* draw current contour mask */
+	cv.drawContours(mask, contours, cntIndex, new cv.Scalar(255, 255, 255), -1);
+
+	/* get roi for color detection */
+	const boundingAreaRect = cv.boundingRect(cnt);
+	const srcRoi = src.roi(boundingAreaRect);
+	const maskRoi = mask.roi(boundingAreaRect);
+
+	// cv.imshow('output-canvas', srcRoi);
+	// cv.imshow('output-canvas', maskRoi);
+
+	/* get mean color of roi in src */
+	const meanColor = cv.mean(srcRoi, maskRoi);
+
+	/* get rgb code */
+	const rgbColorCode = {
+		r: Math.round(meanColor[0]),
+		g: Math.round(meanColor[1]),
+		b: Math.round(meanColor[2])
+	};
+
+	const color = determineColor(rgbColorCode);
+
+	return color;
+}
+
+/* ----------------------------------------------- */
+/* ---------- Shape Detection functions ---------- */
+
+/* determine shapes based on sides */
+function determineShape(cnt, cntArea) {
+	let shape = 'unknown';
+	const perimeter = cv.arcLength(cnt, true);
+	let epsilon = 0.02 * perimeter;
+	let approx = new cv.Mat();
+
+	/* approximate cnt with approxPolyDP */
+	cv.approxPolyDP(cnt, approx, epsilon, true);
+
+	let sides = approx.rows;
+
+	if (sides === 3) {
+		shape = 'Triangle';
+	} else if (sides === 4) {
+		const rect = cv.boundingRect(cnt);
+		const aspectRatio = rect.width / rect.height;
+
+		if (aspectRatio > 0.95 && aspectRatio < 1.05) {
+			shape = 'Square';
+		} else {
+			shape = 'Rectangle';
+		}
+	} else if (sides === 5) {
+		shape = 'Pentagon';
+	} else if (sides === 6) {
+		shape = 'Hexagon';
+	} else if (sides > 7 && sides < 16) {
+		epsilon = 0.01 * perimeter;
+
+		/* approximate cnt with approxPolyDP */
+		cv.approxPolyDP(cnt, approx, epsilon, true);
+
+		sides = approx.rows;
+
+		/* circles usually have 16 sides */
+		if (sides < 17) {
+			if (sides === 8) {
+				shape = 'Octagon';
+				return shape;
+			}
+
+			const circleBoundingRect = cv.boundingRect(cnt);
+			const circleBoundingRectAspectRatio =
+				circleBoundingRect.width / circleBoundingRect.height;
+			const circleBoundingRectArea =
+				circleBoundingRect.width * circleBoundingRect.height;
+			const circularArea = cntArea;
+			const circularAreaRatio = circleBoundingRectArea / circularArea;
+
+			// console.log(circularAreaRatio);
+
+			if (circularAreaRatio >= 1.27 && circularAreaRatio <= 1.36) {
+				shape = 'Ellipse';
+				if (
+					circleBoundingRectAspectRatio > 0.95 &&
+					circleBoundingRectAspectRatio < 1.05
+				) {
+					shape = 'Circle';
+				}
+			}
+		}
+	}
+
+	return shape;
+}
+
+/* detect shapes of objects' in the input */
+function detectShapeWithColor() {
+	const src = cv.imread('output-canvas');
+	let tempSrc = src.clone();
+	// const dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8UC3);
+
+	/* blurring src with gaussian blur */
+	const kernelSize = new cv.Size(5, 5);
+	cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
+
+	/* convert src to grayscale image */
+	cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
+
+	/* canny edge detection */
+	// cv.Canny(src, src, 20, 80, 3, true);
+	cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
+
+	// /* morphological operation (dilate) */
+	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
+	// const anchor = new cv.Point(-1, -1);
+	// cv.dilate(
+	// 	src,
+	// 	src,
+	// 	M,
+	// 	anchor,
+	// 	1,
+	// 	cv.BORDER_CONSTANT,
+	// 	cv.morphologyDefaultBorderValue()
+	// );
+
+	/* morphological operation (closing) */
+	const M = cv.Mat.ones(5, 5, cv.CV_8U);
+	cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
+
+	// /* adaptive thresholding with gaussian method */
+	// cv.adaptiveThreshold(
+	// 	src,
+	// 	src,
+	// 	230,
+	// 	cv.ADAPTIVE_THRESH_GAUSSIAN_C,
+	// 	cv.THRESH_BINARY,
+	// 	13,
+	// 	7
+	// );
+
+	/* simple thresholding */
+	cv.threshold(tempSrc, tempSrc, 245, 255, cv.THRESH_BINARY);
+
+	/* find contours */
+	let contours = new cv.MatVector();
+	let hierarchy = new cv.Mat();
+
+	cv.findContours(
+		tempSrc,
+		contours,
+		hierarchy,
+		cv.RETR_EXTERNAL,
+		cv.CHAIN_APPROX_NONE
+	);
+
+	/* check every contour to detect shape */
+	for (let i = 0; i < contours.size(); i++) {
+		const cnt = contours.get(i);
+
+		/* determine coordinates for putting label */
+		const moment = cv.moments(cnt, false);
+		const x =
+			moment['m00'] === 0 ? 0 : Math.round(moment['m10'] / moment['m00']);
+		const y =
+			moment['m00'] === 0 ? 0 : Math.round(moment['m01'] / moment['m00']);
+		const org = { x, y }; /* label coordinates */
+
+		const contourArea = moment['m00'];
+		// const contourArea = cv.contourArea(cnt);
+
+		/* exclude smaller contours for reducing noise */
+		if (contourArea > 1000) {
+			// console.log(contourArea);
+
+			/* get the shape of current cnt */
+			const shapeName = determineShape(cnt, contourArea);
+
+			// /* skip unknown shapes */
+			// if (shapeName === 'unknown') {
+			// 	continue;
+			// }
+
+			/* get color of current cnt */
+			const shapeColor = detectColor(src, contours, i, cnt);
+			const labelText = shapeColor + '_' + shapeName;
+
+			// /* generates random color */
+			// const color = new cv.Scalar(
+			// 	Math.round(Math.random() * 255),
+			// 	Math.round(Math.random() * 255),
+			// 	Math.round(Math.random() * 255),
+			// 	255
+			// );
+			// console.log(color);
+
+			/* fixed cntColor */
+			// const cntColor = [7, 177, 7, 255];
+			const cntColor = [0, 0, 0, 255];
+			const cntThickness = 2;
+
+			/* draw contours on output canvas */
+			cv.drawContours(
+				src,
+				contours,
+				i,
+				cntColor,
+				cntThickness,
+				cv.LINE_8,
+				hierarchy,
+				100
+			);
+
+			const fontFace = cv.FONT_HERSHEY_DUPLEX;
+			const fontScale = 0.5;
+			const fontColor = cntColor;
+			const fontThickness = 1;
+
+			/* put label on detected shape */
+			cv.putText(
+				src,
+				labelText,
+				org,
+				fontFace,
+				fontScale,
+				fontColor,
+				fontThickness
+			);
+		}
+	}
+
+	/* display output on output-canvas */
+	cv.imshow('output-canvas', src);
+}
+
+/* start process function */
+function startProcess() {
+	if (isImageSet) {
+		/* button view style */
+		startBtn.innerHTML = 'Processing...';
+		startBtn.style.cursor = 'progress';
+		startBtn.disabled = true;
+
+		/* detect objects' shapes and colors in image */
+		detectShapeWithColor();
+
+		/* make output canvas visible */
+		outputCanvas.style.display = 'initial';
+
+		/* button view style */
+		startBtn.innerHTML = 'Process Completed';
+		startBtn.style.cursor = 'default';
+	} else {
+		alert('Please select an Image file.');
+	}
+}

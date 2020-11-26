@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Shape and Color Detection with OpenCV.js</title>
+		<!-- css -->
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h2>Shape and Color Detection with OpenCV.js</h2>
+			</div>
+			<div class="content-wrapper">
+				<div class="content">
+					<div class="image-src-selector">
+						<label for="image-src">Select an image:</label>
+						<input
+							type="file"
+							id="imageFile"
+							name="imageFile"
+							accept="image/*"
+						/>
+					</div>
+					<div class="process-start-btn">
+						<button class="start-button" onclick="startProcess()">
+							Start Processing
+						</button>
+					</div>
+					<hr />
+					<div class="media-wrapper">
+						<div class="input-content">
+							<!-- input image -->
+							<img id="image" src="#" crossorigin="anonymous" />
+						</div>
+						<div class="output-content">
+							<!-- processed output content -->
+							<div>
+								<canvas id="output-canvas"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<p>@2020 Towsif Ahmed Omi</p>
+			</div>
+		</div>
+
+		<!-- script -->
+		<script src="assets/js/main.js"></script>
+		<script
+			async
+			src="assets/js/vendor/opencv.js"
+			onload="onOpenCvReady();"
+		></script>
+	</body>
+</html>
