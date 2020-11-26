@@ -11,6 +11,11 @@ const outputCanvas = document.getElementById('output-canvas');
 
 outputCanvas.style.border = '1px solid #3e3e3e2e';
 
+let c_out;
+let ctx_out;
+let c_tmp;
+let ctx_tmp;
+
 /* webcam start function */
 function startWebcam() {
 	isVideoSet = true;
@@ -35,6 +40,21 @@ videoFile.addEventListener(
 		for (let i = 0; i < videoFile.files.length; i++) {
 			video.src = URL.createObjectURL(this.files[i]);
 			video.play();
+
+			video.style.display = 'initial';
+
+			/* set canvas size based on the image container */
+			outputCanvas.setAttribute('width', video.offsetWidth);
+			outputCanvas.setAttribute('height', video.offsetHeight);
+
+			// console.log(video.offsetWidth);
+			// console.log(video.offsetHeight);
+
+			/* button view style */
+			startBtn.innerHTML = 'Start Processing';
+			startBtn.style.cursor = 'pointer';
+			startBtn.disabled = false;
+			outputCanvas.style.display = 'none';
 		}
 	},
 	false
@@ -74,6 +94,31 @@ videoFile.addEventListener(
 /* opencv load status log */
 function onOpenCvReady() {
 	console.log('OpenCV.js is ready.');
+}
+
+function init() {
+	c_out = document.getElementById('output-canvas');
+	ctx_out = c_out.getContext('2d');
+
+	/* temporary canvas */
+	c_tmp = document.createElement('canvas');
+	c_tmp.setAttribute('width', 640);
+	c_tmp.setAttribute('height', 360);
+	ctx_tmp = c_tmp.getContext('2d');
+
+	video.play();
+
+	computeFrame();
+}
+
+function computeFrame() {
+	/* draw a frame of the video on a temporary canvas */
+	ctx_tmp.drawImage(video, 0, 0, c_out.width, c_out.height);
+	let frame = ctx_tmp.getImageData(0, 0, c_out.width, c_out.height);
+
+	/* output the frames on canvas */
+	ctx_out.putImageData(frame, 0, 0);
+	setTimeout(computeFrame, 0);
 }
 
 /* ----------------------------------------------- */
@@ -433,14 +478,16 @@ function detectShapeWithColor() {
 
 /* start process function */
 function startProcess() {
-	if (isImageSet) {
+	if (isVideoSet) {
 		/* button view style */
 		startBtn.innerHTML = 'Processing...';
 		startBtn.style.cursor = 'progress';
 		startBtn.disabled = true;
 
-		/* detect objects' shapes and colors in image */
-		detectShapeWithColor();
+		// /* detect objects' shapes and colors in image */
+		// detectShapeWithColor();
+
+		init();
 
 		/* make output canvas visible */
 		outputCanvas.style.display = 'initial';
@@ -449,6 +496,6 @@ function startProcess() {
 		startBtn.innerHTML = 'Process Completed';
 		startBtn.style.cursor = 'default';
 	} else {
-		alert('Please select an Image file.');
+		alert('Please select a video file, or turn on Webcam.');
 	}
 }
