@@ -96,7 +96,7 @@ function onOpenCvReady() {
 	console.log('OpenCV.js is ready.');
 }
 
-function init() {
+function processVideo() {
 	c_out = document.getElementById('output-canvas');
 	ctx_out = c_out.getContext('2d');
 
@@ -116,8 +116,11 @@ function computeFrame() {
 	ctx_tmp.drawImage(video, 0, 0, c_out.width, c_out.height);
 	let frame = ctx_tmp.getImageData(0, 0, c_out.width, c_out.height);
 
-	/* output the frames on canvas */
-	ctx_out.putImageData(frame, 0, 0);
+	/* detect objects' shapes and colors in frame */
+	detectShapeWithColor(frame);
+
+	// /* output the frames on canvas */
+	// ctx_out.putImageData(frame, 0, 0);
 	setTimeout(computeFrame, 0);
 }
 
@@ -338,8 +341,8 @@ function determineShape(cnt, cntArea) {
 }
 
 /* detect shapes of objects' in the input */
-function detectShapeWithColor() {
-	const src = cv.imread('output-canvas');
+function detectShapeWithColor(img) {
+	const src = cv.matFromImageData(img);
 	let tempSrc = src.clone();
 	// const dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8UC3);
 
@@ -393,7 +396,7 @@ function detectShapeWithColor() {
 		tempSrc,
 		contours,
 		hierarchy,
-		cv.RETR_EXTERNAL,
+		cv.RETR_TREE,
 		cv.CHAIN_APPROX_NONE
 	);
 
@@ -419,10 +422,10 @@ function detectShapeWithColor() {
 			/* get the shape of current cnt */
 			const shapeName = determineShape(cnt, contourArea);
 
-			// /* skip unknown shapes */
-			// if (shapeName === 'unknown') {
-			// 	continue;
-			// }
+			/* skip unknown shapes */
+			if (shapeName === 'unknown') {
+				continue;
+			}
 
 			/* get color of current cnt */
 			const shapeColor = detectColor(src, contours, i, cnt);
@@ -484,10 +487,7 @@ function startProcess() {
 		startBtn.style.cursor = 'progress';
 		startBtn.disabled = true;
 
-		// /* detect objects' shapes and colors in image */
-		// detectShapeWithColor();
-
-		init();
+		processVideo();
 
 		/* make output canvas visible */
 		outputCanvas.style.display = 'initial';
