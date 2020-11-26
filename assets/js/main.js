@@ -1,41 +1,75 @@
-let isImageSet = false;
-const imageFile = document.getElementById('imageFile');
-const img = document.getElementById('image');
+// let isImageSet = false;
+// const imageFile = document.getElementById('imageFile');
+// const img = document.getElementById('image');
+
+let isVideoSet = false;
+const videoFile = document.getElementById('videoFile');
+const video = document.getElementById('video');
+
 const startBtn = document.querySelector('.start-button');
 const outputCanvas = document.getElementById('output-canvas');
 
 outputCanvas.style.border = '1px solid #3e3e3e2e';
 
-/* select image file */
-imageFile.addEventListener(
+/* webcam start function */
+function startWebcam() {
+	isVideoSet = true;
+	if (navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices
+			.getUserMedia({ video: true })
+			.then(function (stream) {
+				video.srcObject = stream;
+			})
+			.catch(function (err) {
+				console.log('Something went wrong!');
+			});
+	}
+	video.autoplay = true;
+}
+
+/* change video src to selected video file src */
+videoFile.addEventListener(
 	'change',
 	function () {
-		isImageSet = true;
-		for (let i = 0; i < imageFile.files.length; i++) {
-			img.src = URL.createObjectURL(this.files[i]);
-			img.style.display = 'initial';
-
-			/* button view style */
-			startBtn.innerHTML = 'Start Processing';
-			startBtn.style.cursor = 'pointer';
-			startBtn.disabled = false;
-			outputCanvas.style.display = 'none';
+		isVideoSet = true;
+		for (let i = 0; i < videoFile.files.length; i++) {
+			video.src = URL.createObjectURL(this.files[i]);
+			video.play();
 		}
 	},
 	false
 );
 
-/* put the image on canvas to work on */
-img.onload = function () {
-	/* set canvas size based on the image container */
-	outputCanvas.setAttribute('width', img.offsetWidth);
-	outputCanvas.setAttribute('height', img.offsetHeight);
-	// outputCanvas.style.display = 'initial';
+// /* select image file */
+// imageFile.addEventListener(
+// 	'change',
+// 	function () {
+// 		isImageSet = true;
+// 		for (let i = 0; i < imageFile.files.length; i++) {
+// 			img.src = URL.createObjectURL(this.files[i]);
+// 			img.style.display = 'initial';
 
-	const mat = cv.imread(img);
-	cv.imshow('output-canvas', mat);
-	mat.delete();
-};
+// 			/* button view style */
+// 			startBtn.innerHTML = 'Start Processing';
+// 			startBtn.style.cursor = 'pointer';
+// 			startBtn.disabled = false;
+// 			outputCanvas.style.display = 'none';
+// 		}
+// 	},
+// 	false
+// );
+
+// /* put the image on canvas to work on */
+// img.onload = function () {
+// 	/* set canvas size based on the image container */
+// 	outputCanvas.setAttribute('width', img.offsetWidth);
+// 	outputCanvas.setAttribute('height', img.offsetHeight);
+// 	// outputCanvas.style.display = 'initial';
+
+// 	const mat = cv.imread(img);
+// 	cv.imshow('output-canvas', mat);
+// 	mat.delete();
+// };
 
 /* opencv load status log */
 function onOpenCvReady() {
