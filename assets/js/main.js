@@ -267,11 +267,16 @@ function detectColor(src, contours, cntIndex, cnt) {
 	const srcRoi = src.roi(boundingAreaRect);
 	const maskRoi = mask.roi(boundingAreaRect);
 
+	mask.delete();
+
 	// cv.imshow('output-canvas', srcRoi);
 	// cv.imshow('output-canvas', maskRoi);
 
 	/* get mean color of roi in src */
 	const meanColor = cv.mean(srcRoi, maskRoi);
+
+	srcRoi.delete();
+	maskRoi.delete();
 
 	/* get rgb code */
 	const rgbColorCode = {
@@ -322,6 +327,8 @@ function determineShape(cnt, cntArea) {
 		cv.approxPolyDP(cnt, approx, epsilon, true);
 
 		sides = approx.rows;
+
+		approx.delete();
 
 		/* circles usually have 16 sides */
 		if (sides < 17) {
@@ -389,6 +396,8 @@ function detectShapeWithColor(img) {
 	const M = cv.Mat.ones(5, 5, cv.CV_8U);
 	cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
 
+	M.delete();
+
 	// /* adaptive thresholding with gaussian method */
 	// cv.adaptiveThreshold(
 	// 	src,
@@ -414,6 +423,8 @@ function detectShapeWithColor(img) {
 		cv.RETR_TREE,
 		cv.CHAIN_APPROX_NONE
 	);
+
+	tempSrc.delete();
 
 	/* check every contour to detect shape */
 	for (let i = 0; i < contours.size(); i++) {
@@ -492,6 +503,10 @@ function detectShapeWithColor(img) {
 
 	/* display output on output-canvas */
 	cv.imshow('output-canvas', src);
+
+	contours.delete();
+	hierarchy.delete();
+	src.delete();
 }
 
 /* start process function */
