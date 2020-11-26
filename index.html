@@ -3,18 +3,25 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Shape and Color Detection with OpenCV.js</title>
+		<title>Real-time Shape and Color Detection with OpenCV.js</title>
 		<!-- css -->
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body>
 		<div class="container">
 			<div class="header">
-				<h2>Shape and Color Detection with OpenCV.js</h2>
+				<h2>Real-time Shape and Color Detection with OpenCV.js</h2>
 			</div>
 			<div class="content-wrapper">
 				<div class="content">
-					<div class="image-src-selector">
+					<div class="video-src-selector">
+						<button class="webcam-start-button">
+							Turn On Webcam
+						</button>
+						<label for="video-src">OR, Select a video:</label>
+						<input type="file" id="videoFile" name="videoFile" />
+					</div>
+					<!-- <div class="image-src-selector">
 						<label for="image-src">Select an image:</label>
 						<input
 							type="file"
@@ -22,22 +29,45 @@
 							name="imageFile"
 							accept="image/*"
 						/>
-					</div>
+					</div> -->
 					<div class="process-start-btn">
 						<button class="start-button" onclick="startProcess()">
 							Start Processing
 						</button>
 					</div>
 					<hr />
-					<div class="media-wrapper">
+					<!-- <div class="media-wrapper">
 						<div class="input-content">
-							<!-- input image -->
 							<img id="image" src="#" crossorigin="anonymous" />
 						</div>
 						<div class="output-content">
-							<!-- processed output content -->
 							<div>
 								<canvas id="output-canvas"></canvas>
+							</div>
+						</div>
+					</div> -->
+					<div class="media-wrapper">
+						<!-- original video -->
+						<div class="input-content">
+							<video
+								id="video"
+								width="640"
+								height="360"
+								src="#"
+								loop
+								controls
+								muted
+							></video>
+						</div>
+
+						<!-- processed video -->
+						<div class="output-content">
+							<div>
+								<canvas
+									id="output-canvas"
+									width="640"
+									height="360"
+								></canvas>
 							</div>
 						</div>
 					</div>

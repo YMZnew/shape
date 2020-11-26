@@ -57,9 +57,24 @@ body {
   padding: 20px;
 }
 
-.container .content-wrapper .content .image-src-selector {
+.container .content-wrapper .content .video-src-selector {
   margin: 0 0 10px 0;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.container .content-wrapper .content .video-src-selector .webcam-start-button {
+  display: block;
+  padding: 4px 10px;
+  font-size: 14px;
+  background-color: #e6e6e6;
+  color: #333;
+  border: 2px solid #969696;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.container .content-wrapper .content .video-src-selector #videoFile {
+  padding: 10px;
 }
 
 .container .content-wrapper .content .process-start-btn {
@@ -92,14 +107,14 @@ body {
   height: auto;
 }
 
-.container .content-wrapper .content .media-wrapper .input-content #image {
+.container .content-wrapper .content .media-wrapper .input-content #video {
   width: 100%;
+  height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   padding: 10px;
   border: 1px solid #3e3e3e2e;
   background: #dbdbdb2e;
-  display: none;
 }
 
 .container .content-wrapper .content .media-wrapper .output-content {
@@ -114,12 +129,9 @@ body {
   height: auto;
 }
 
-.container .content-wrapper .content .media-wrapper .output-content canvas {
+.container .content-wrapper .content .media-wrapper .output-content #output-canvas {
   padding: 10px;
   background: #dbdbdb2e;
-}
-
-.container .content-wrapper .content .media-wrapper .output-content #output-canvas {
   display: none;
 }
 
@@ -127,7 +139,7 @@ body {
   .container .content-wrapper .content {
     padding: 0;
   }
-  .container .content-wrapper .content .image-src-selector {
+  .container .content-wrapper .content .video-src-selector {
     margin: 10px 0 10px 20px;
   }
   .container .content-wrapper .content .process-start-btn {
