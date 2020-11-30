@@ -1,13 +1,10 @@
-// let isImageSet = false;
-// const imageFile = document.getElementById('imageFile');
-// const img = document.getElementById('image');
-
 let isVideoSet = false;
 const videoFile = document.getElementById('videoFile');
 const video = document.getElementById('video');
 
 const startBtn = document.querySelector('.start-button');
 const outputCanvas = document.getElementById('output-canvas');
+const outputVideoWrapper = document.getElementById('outputVideoWrapper');
 
 let canvasWidth;
 let canvasHeight;
@@ -34,15 +31,10 @@ function startWebcam() {
 
 	video.style.display = 'initial';
 
-	/* set canvas size based on the image container */
-	outputCanvas.setAttribute('width', video.offsetWidth);
-	outputCanvas.setAttribute('height', video.offsetHeight);
-
 	/* button view style */
 	startBtn.innerHTML = 'Start Processing';
 	startBtn.style.cursor = 'pointer';
 	startBtn.disabled = false;
-	outputCanvas.style.display = 'none';
 }
 
 /* change video src to selected video file src */
@@ -60,7 +52,6 @@ videoFile.addEventListener(
 			startBtn.innerHTML = 'Start Processing';
 			startBtn.style.cursor = 'pointer';
 			startBtn.disabled = false;
-			outputCanvas.style.display = 'none';
 		}
 	},
 	false
@@ -88,37 +79,6 @@ video.addEventListener(
 	},
 	false
 );
-
-// /* select image file */
-// imageFile.addEventListener(
-// 	'change',
-// 	function () {
-// 		isImageSet = true;
-// 		for (let i = 0; i < imageFile.files.length; i++) {
-// 			img.src = URL.createObjectURL(this.files[i]);
-// 			img.style.display = 'initial';
-
-// 			/* button view style */
-// 			startBtn.innerHTML = 'Start Processing';
-// 			startBtn.style.cursor = 'pointer';
-// 			startBtn.disabled = false;
-// 			outputCanvas.style.display = 'none';
-// 		}
-// 	},
-// 	false
-// );
-
-// /* put the image on canvas to work on */
-// img.onload = function () {
-// 	/* set canvas size based on the image container */
-// 	outputCanvas.setAttribute('width', img.offsetWidth);
-// 	outputCanvas.setAttribute('height', img.offsetHeight);
-// 	// outputCanvas.style.display = 'initial';
-
-// 	const mat = cv.imread(img);
-// 	cv.imshow('output-canvas', mat);
-// 	mat.delete();
-// };
 
 /* opencv load status log */
 function onOpenCvReady() {
@@ -534,7 +494,7 @@ function startProcess() {
 		processVideo();
 
 		/* make output canvas visible */
-		outputCanvas.style.display = 'initial';
+		outputVideoWrapper.style.display = 'initial';
 
 		/* button view style */
 		startBtn.innerHTML = 'Process Completed';
