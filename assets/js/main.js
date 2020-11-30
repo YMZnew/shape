@@ -70,8 +70,9 @@ video.addEventListener(
 		// console.log('video.offsetHeight', video.offsetHeight);
 
 		canvasWidth = video.offsetWidth;
-		canvasHeight =
-			video.offsetWidth / (video.videoWidth / video.videoHeight) + 1;
+		canvasHeight = Math.ceil(
+			video.offsetWidth / (video.videoWidth / video.videoHeight)
+		);
 
 		/* set canvas size based on the image container */
 		outputCanvas.setAttribute('width', canvasWidth);
@@ -85,6 +86,7 @@ function onOpenCvReady() {
 	console.log('OpenCV.js is ready.');
 }
 
+/* process video on canvas */
 function processVideo() {
 	c_out = document.getElementById('output-canvas');
 	ctx_out = c_out.getContext('2d');
@@ -100,6 +102,7 @@ function processVideo() {
 	computeFrame();
 }
 
+/* process video frames */
 function computeFrame() {
 	/* draw a frame of the video on a temporary canvas */
 	ctx_tmp.drawImage(video, 0, 0, c_out.width, c_out.height);
