@@ -11,6 +11,9 @@ const outputCanvas = document.getElementById('output-canvas');
 
 outputCanvas.style.border = '1px solid #3e3e3e2e';
 
+let canvasWidth;
+let canvasHeight;
+
 let c_out;
 let ctx_out;
 let c_tmp;
@@ -58,19 +61,34 @@ videoFile.addEventListener(
 
 			video.style.display = 'initial';
 
-			/* set canvas size based on the image container */
-			outputCanvas.setAttribute('width', video.offsetWidth);
-			outputCanvas.setAttribute('height', video.offsetHeight);
-
-			// console.log(video.offsetWidth);
-			// console.log(video.offsetHeight);
-
 			/* button view style */
 			startBtn.innerHTML = 'Start Processing';
 			startBtn.style.cursor = 'pointer';
 			startBtn.disabled = false;
 			outputCanvas.style.display = 'none';
 		}
+	},
+	false
+);
+
+video.addEventListener(
+	'loadeddata',
+	function () {
+		console.log('video loaded');
+
+		console.log('videoWidth', video.videoWidth);
+		console.log('videoHeight', video.videoHeight);
+
+		console.log('video.offsetWidth', video.offsetWidth);
+		console.log('video.offsetHeight', video.offsetHeight);
+
+		canvasWidth = video.offsetWidth;
+		canvasHeight =
+			video.offsetWidth / (video.videoWidth / video.videoHeight) - 1;
+
+		/* set canvas size based on the image container */
+		outputCanvas.setAttribute('width', canvasWidth);
+		outputCanvas.setAttribute('height', canvasHeight);
 	},
 	false
 );
@@ -113,12 +131,14 @@ function onOpenCvReady() {
 
 function processVideo() {
 	c_out = document.getElementById('output-canvas');
+	console.log(c_out.width);
+	console.log(c_out.height);
 	ctx_out = c_out.getContext('2d');
 
 	/* temporary canvas */
 	c_tmp = document.createElement('canvas');
-	c_tmp.setAttribute('width', 640);
-	c_tmp.setAttribute('height', 360);
+	c_tmp.setAttribute('width', canvasWidth);
+	c_tmp.setAttribute('height', canvasHeight);
 	ctx_tmp = c_tmp.getContext('2d');
 
 	video.play();
