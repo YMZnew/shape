@@ -467,8 +467,8 @@ function detectShapeWithColor(img) {
 			// console.log(color);
 
 			/* fixed cntColor */
-			// const cntColor = [7, 177, 7, 255];
-			const cntColor = [0, 0, 0, 255];
+			const cntColor = [0, 255, 0, 255];
+			// const cntColor = [0, 0, 0, 255];
 			const cntThickness = 2;
 
 			/* draw contours on output canvas */
@@ -485,7 +485,7 @@ function detectShapeWithColor(img) {
 
 			const fontFace = cv.FONT_HERSHEY_DUPLEX;
 			const fontScale = 0.5;
-			const fontColor = cntColor;
+			const fontColor = [255, 55, 35, 255];
 			const fontThickness = 1;
 
 			/* put label on detected shape */
