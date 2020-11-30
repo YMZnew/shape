@@ -9,8 +9,6 @@ const video = document.getElementById('video');
 const startBtn = document.querySelector('.start-button');
 const outputCanvas = document.getElementById('output-canvas');
 
-outputCanvas.style.border = '1px solid #3e3e3e2e';
-
 let canvasWidth;
 let canvasHeight;
 
@@ -40,9 +38,6 @@ function startWebcam() {
 	outputCanvas.setAttribute('width', video.offsetWidth);
 	outputCanvas.setAttribute('height', video.offsetHeight);
 
-	// console.log(video.offsetWidth);
-	// console.log(video.offsetHeight);
-
 	/* button view style */
 	startBtn.innerHTML = 'Start Processing';
 	startBtn.style.cursor = 'pointer';
@@ -71,20 +66,21 @@ videoFile.addEventListener(
 	false
 );
 
+/* set output canvas resolution */
 video.addEventListener(
 	'loadeddata',
 	function () {
-		console.log('video loaded');
+		// console.log('video content loaded.');
 
-		console.log('videoWidth', video.videoWidth);
-		console.log('videoHeight', video.videoHeight);
+		// console.log('videoWidth', video.videoWidth);
+		// console.log('videoHeight', video.videoHeight);
 
-		console.log('video.offsetWidth', video.offsetWidth);
-		console.log('video.offsetHeight', video.offsetHeight);
+		// console.log('video.offsetWidth', video.offsetWidth);
+		// console.log('video.offsetHeight', video.offsetHeight);
 
 		canvasWidth = video.offsetWidth;
 		canvasHeight =
-			video.offsetWidth / (video.videoWidth / video.videoHeight) - 1;
+			video.offsetWidth / (video.videoWidth / video.videoHeight) + 1;
 
 		/* set canvas size based on the image container */
 		outputCanvas.setAttribute('width', canvasWidth);
@@ -131,8 +127,6 @@ function onOpenCvReady() {
 
 function processVideo() {
 	c_out = document.getElementById('output-canvas');
-	console.log(c_out.width);
-	console.log(c_out.height);
 	ctx_out = c_out.getContext('2d');
 
 	/* temporary canvas */
