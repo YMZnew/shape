@@ -60,6 +60,15 @@ body {
 				}
 			}
 
+			.src-status {
+				margin: 0;
+
+				p {
+					font-size: 14px;
+					font-weight: bold;
+				}
+			}
+
 			.process-start-btn {
 				margin: 20px 0;
 
@@ -121,6 +130,10 @@ body {
 
 				.video-src-selector {
 					margin: 10px 0 10px 20px;
+				}
+
+				.src-status {
+					margin: 0 20px;
 				}
 
 				.process-start-btn {

@@ -77,6 +77,15 @@ body {
   padding: 10px;
 }
 
+.container .content-wrapper .content .src-status {
+  margin: 0;
+}
+
+.container .content-wrapper .content .src-status p {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .container .content-wrapper .content .process-start-btn {
   margin: 20px 0;
 }
@@ -145,6 +154,9 @@ body {
   }
   .container .content-wrapper .content .video-src-selector {
     margin: 10px 0 10px 20px;
+  }
+  .container .content-wrapper .content .src-status {
+    margin: 0 20px;
   }
   .container .content-wrapper .content .process-start-btn {
     margin: 20px 20px;

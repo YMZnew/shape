@@ -1,6 +1,7 @@
 let isVideoSet = false;
 const videoFile = document.getElementById('videoFile');
 const video = document.getElementById('video');
+const srcStatusText = document.getElementById('srcStatusText');
 
 const startBtn = document.querySelector('.start-button');
 const outputCanvas = document.getElementById('output-canvas');
@@ -31,6 +32,10 @@ function startWebcam() {
 
 	// video.style.display = 'initial';
 
+	/* video src selection status */
+	srcStatusText.innerHTML =
+		"<span style='color: green;'>Webcam started.</span>";
+
 	/* button view style */
 	startBtn.innerHTML = 'Start Processing';
 	startBtn.style.cursor = 'pointer';
@@ -47,6 +52,10 @@ videoFile.addEventListener(
 			video.play();
 
 			// video.style.display = 'initial';
+
+			/* video src selection status */
+			srcStatusText.innerHTML =
+				"<span style='color: green;'>Video selected.</span>";
 
 			/* button view style */
 			startBtn.innerHTML = 'Start Processing';
@@ -515,7 +524,7 @@ function startProcess() {
 		outputVideoWrapper.style.display = 'initial';
 
 		/* button view style */
-		startBtn.innerHTML = 'Process Completed';
+		startBtn.innerHTML = 'Process Running...';
 		startBtn.style.cursor = 'default';
 	} else {
 		alert('Please select a video file, or turn on Webcam.');
