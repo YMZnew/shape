@@ -29,7 +29,7 @@ function startWebcam() {
 	}
 	video.autoplay = true;
 
-	video.style.display = 'initial';
+	// video.style.display = 'initial';
 
 	/* button view style */
 	startBtn.innerHTML = 'Start Processing';
@@ -46,7 +46,7 @@ videoFile.addEventListener(
 			video.src = URL.createObjectURL(this.files[i]);
 			video.play();
 
-			video.style.display = 'initial';
+			// video.style.display = 'initial';
 
 			/* button view style */
 			startBtn.innerHTML = 'Start Processing';
@@ -69,10 +69,23 @@ video.addEventListener(
 		// console.log('video.offsetWidth', video.offsetWidth);
 		// console.log('video.offsetHeight', video.offsetHeight);
 
-		canvasWidth = video.offsetWidth;
+		/* limiting canvas resolution for visual */
+		if (window.innerWidth <= 800) {
+			canvasWidth = window.innerWidth - 22; /* 22px left for padding */
+		} else if (video.videoWidth > 800) {
+			canvasWidth = 800;
+		} else {
+			canvasWidth = video.videoWidth;
+		}
+
 		canvasHeight = Math.ceil(
-			video.offsetWidth / (video.videoWidth / video.videoHeight)
+			canvasWidth / (video.videoWidth / video.videoHeight)
 		);
+
+		// canvasWidth = video.offsetWidth;
+		// canvasHeight = Math.ceil(
+		// 	canvasWidth / (video.videoWidth / video.videoHeight)
+		// );
 
 		/* set canvas size based on the image container */
 		outputCanvas.setAttribute('width', canvasWidth);
@@ -194,6 +207,8 @@ function getBaseColorName(hsl) {
 		return 'Purple';
 	} else if (h >= 291 && h <= 345) {
 		return 'Pink';
+	} else {
+		return 'Unknown';
 	}
 }
 
@@ -339,7 +354,7 @@ function determineShape(cnt, cntArea) {
 	return shape;
 }
 
-/* detect shapes of objects' in the input */
+/* detect the shape of the object */
 function detectShapeWithColor(img) {
 	const src = cv.matFromImageData(img);
 	let tempSrc = src.clone();

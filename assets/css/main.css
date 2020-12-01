@@ -100,11 +100,14 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .container .content-wrapper .content .media-wrapper .input-content {
-  width: 500px;
-  height: auto;
+  display: none;
 }
 
 .container .content-wrapper .content .media-wrapper .input-content .video-wrapper {
@@ -114,7 +117,6 @@ body {
 }
 
 .container .content-wrapper .content .media-wrapper .input-content .video-wrapper #video {
-  width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   display: none;
