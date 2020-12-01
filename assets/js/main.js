@@ -236,7 +236,7 @@ function getColorIntensity(rgbColorCode) {
 
 	if (intensityValue >= 80 && intensityValue <= 100) {
 		intensity = 'Semi dark';
-	} else if (intensityValue < 40) {
+	} else if (intensityValue < 80) {
 		intensity = 'Dark';
 	} else {
 		intensity = 'Light';
