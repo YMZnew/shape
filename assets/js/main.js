@@ -488,6 +488,19 @@ function detectShapeWithColor(img) {
 			const fontScale = 0.5;
 			const fontColor = [255, 55, 35, 255];
 			const fontThickness = 1;
+			const fontBackColor = [255, 255, 255, 255];
+			const fontBackThickness = 2;
+
+			/* font border */
+			cv.putText(
+				src,
+				labelText,
+				org,
+				fontFace,
+				fontScale,
+				fontBackColor,
+				fontBackThickness
+			);
 
 			/* put label on detected shape */
 			cv.putText(
