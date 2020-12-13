@@ -23,7 +23,8 @@ function startWebcam() {
 			.getUserMedia({ video: true })
 			.then(function (stream) {
 				video.srcObject = stream;
-				startProcess();
+setTimeout(function() { startProcess(); }, 2000);
+				
 			})
 			.catch(function (err) {
 				console.log('Something went wrong!');
