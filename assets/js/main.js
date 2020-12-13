@@ -450,6 +450,9 @@ function detectShapeWithColor(img) {
 
 			/* get the shape of current cnt */
 			const shapeName = determineShape(cnt, contourArea);
+			
+		
+			if(shapeName == 'Pentagon'){
 
 			/* skip unknown shapes */
 			if (shapeName === 'unknown') {
@@ -514,6 +517,7 @@ function detectShapeWithColor(img) {
 				fontColor,
 				fontThickness
 			);
+			}
 		}
 	}
 
