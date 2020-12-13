@@ -1,5 +1,5 @@
 let isVideoSet = false;
-const videoFile = document.getElementById('videoFile');
+// const videoFile = document.getElementById('videoFile');
 const video = document.getElementById('video');
 const srcStatusText = document.getElementById('srcStatusText');
 
@@ -44,28 +44,28 @@ function startWebcam() {
 }
 
 /* change video src to selected video file src */
-videoFile.addEventListener(
-	'change',
-	function () {
-		isVideoSet = true;
-		for (let i = 0; i < videoFile.files.length; i++) {
-			video.src = URL.createObjectURL(this.files[i]);
-			video.play();
+// videoFile.addEventListener(
+// 	'change',
+// 	function () {
+// 		isVideoSet = true;
+// 		for (let i = 0; i < videoFile.files.length; i++) {
+// 			video.src = URL.createObjectURL(this.files[i]);
+// 			video.play();
 
-			// video.style.display = 'initial';
+// 			// video.style.display = 'initial';
 
-			/* video src selection status */
-			srcStatusText.innerHTML =
-				"<span style='color: green;'>Video selected.</span>";
+// 			/* video src selection status */
+// 			srcStatusText.innerHTML =
+// 				"<span style='color: green;'>Video selected.</span>";
 
-			/* button view style */
-			startBtn.innerHTML = 'Start Processing';
-			startBtn.style.cursor = 'pointer';
-			startBtn.disabled = false;
-		}
-	},
-	false
-);
+// 			/* button view style */
+// 			startBtn.innerHTML = 'Start Processing';
+// 			startBtn.style.cursor = 'pointer';
+// 			startBtn.disabled = false;
+// 		}
+// 	},
+// 	false
+// );
 
 /* set output canvas resolution */
 video.addEventListener(
