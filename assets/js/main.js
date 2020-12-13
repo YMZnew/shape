@@ -460,7 +460,7 @@ function detectShapeWithColor(img) {
 			}
 
 			/* get color of current cnt */
-			const shapeColor = detectColor(src, contours, i, cnt);
+			//const shapeColor = detectColor(src, contours, i, cnt);
 			const labelText = contourArea+' ';
 
 			// /* generates random color */
