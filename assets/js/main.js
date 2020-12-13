@@ -33,13 +33,13 @@ function startWebcam() {
 	// video.style.display = 'initial';
 
 	/* video src selection status */
-	srcStatusText.innerHTML =
-		"<span style='color: green;'>Webcam started.</span>";
+// 	srcStatusText.innerHTML =
+// 		"<span style='color: green;'>Webcam started.</span>";
 
 	/* button view style */
-	startBtn.innerHTML = 'Start Processing';
-	startBtn.style.cursor = 'pointer';
-	startBtn.disabled = false;
+// 	startBtn.innerHTML = 'Start Processing';
+// 	startBtn.style.cursor = 'pointer';
+// 	startBtn.disabled = false;
 	startProcess;
 }
 
@@ -536,9 +536,9 @@ function detectShapeWithColor(img) {
 function startProcess() {
 	if (isVideoSet) {
 		/* button view style */
-		startBtn.innerHTML = 'Processing...';
-		startBtn.style.cursor = 'progress';
-		startBtn.disabled = true;
+// 		startBtn.innerHTML = 'Processing...';
+// 		startBtn.style.cursor = 'progress';
+// 		startBtn.disabled = true;
 
 		processVideo();
 
@@ -546,8 +546,8 @@ function startProcess() {
 		outputVideoWrapper.style.display = 'initial';
 
 		/* button view style */
-		startBtn.innerHTML = 'Process Running...';
-		startBtn.style.cursor = 'default';
+// 		startBtn.innerHTML = 'Process Running...';
+// 		startBtn.style.cursor = 'default';
 	} else {
 		alert('Please select a video file, or turn on Webcam.');
 	}
