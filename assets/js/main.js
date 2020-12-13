@@ -106,6 +106,8 @@ video.addEventListener(
 /* opencv load status log */
 function onOpenCvReady() {
 	console.log('OpenCV.js is ready.');
+	startWebcam();
+	startProcess;
 }
 
 /* process video on canvas */
