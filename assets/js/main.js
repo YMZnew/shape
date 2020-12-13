@@ -40,6 +40,7 @@ function startWebcam() {
 	startBtn.innerHTML = 'Start Processing';
 	startBtn.style.cursor = 'pointer';
 	startBtn.disabled = false;
+	startProcess;
 }
 
 /* change video src to selected video file src */
@@ -107,7 +108,6 @@ video.addEventListener(
 function onOpenCvReady() {
 	console.log('OpenCV.js is ready.');
 	startWebcam();
-	startProcess;
 }
 
 /* process video on canvas */
