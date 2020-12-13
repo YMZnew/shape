@@ -23,6 +23,7 @@ function startWebcam() {
 			.getUserMedia({ video: true })
 			.then(function (stream) {
 				video.srcObject = stream;
+				startProcess;
 			})
 			.catch(function (err) {
 				console.log('Something went wrong!');
@@ -40,7 +41,6 @@ function startWebcam() {
 // 	startBtn.innerHTML = 'Start Processing';
 // 	startBtn.style.cursor = 'pointer';
 // 	startBtn.disabled = false;
-	startProcess;
 }
 
 /* change video src to selected video file src */
