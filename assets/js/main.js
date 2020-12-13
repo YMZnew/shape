@@ -27,6 +27,7 @@ function startWebcam() {
 			})
 			.catch(function (err) {
 				console.log('Something went wrong!');
+			alert('problem : '+err);
 			});
 	}
 	video.autoplay = true;
