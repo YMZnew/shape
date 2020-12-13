@@ -310,6 +310,7 @@ function determineShape(cnt, cntArea) {
 
 	if (sides === 3) {
 		shape = 'Triangle';
+		break;
 	} else if (sides === 4) {
 		const rect = cv.boundingRect(cnt);
 		const aspectRatio = rect.width / rect.height;
