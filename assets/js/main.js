@@ -457,9 +457,9 @@ function detectShapeWithColor(img) {
 			if(shapeName == 'Triangle'){
 
 			/* skip unknown shapes */
-			if (shapeName === 'unknown') {
-				continue;
-			}
+// 			if (shapeName === 'unknown') {
+// 				continue;
+// 			}
 
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
@@ -519,6 +519,7 @@ function detectShapeWithColor(img) {
 				fontColor,
 				fontThickness
 			);
+				break;
 			}
 		}
 	}
