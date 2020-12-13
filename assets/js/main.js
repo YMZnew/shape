@@ -452,7 +452,7 @@ function detectShapeWithColor(img) {
 			const shapeName = determineShape(cnt, contourArea);
 			
 		
-			if(shapeName == 'Pentagon'){
+			if(shapeName == 'Triangle'){
 
 			/* skip unknown shapes */
 			if (shapeName === 'unknown') {
