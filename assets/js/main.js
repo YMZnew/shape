@@ -20,7 +20,12 @@ function startWebcam() {
 	isVideoSet = true;
 	if (navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices
-			.getUserMedia({ video: true })
+			.getUserMedia({ 
+video: { 
+width: { min: 320, max: 480 },
+		height: { min: 240, max: 360 }
+}
+ })
 			.then(function (stream) {
 				video.srcObject = stream;
 setTimeout(function() { startProcess(); }, 2000);
