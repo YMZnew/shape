@@ -22,8 +22,8 @@ function startWebcam() {
 		navigator.mediaDevices
 			.getUserMedia({ 
 video: { 
-width: { min: 320, max: 480 },
-		height: { min: 240, max: 360 }
+width: { min: 240, max:240  },
+		height: { min: 320, max: 320 }
 }
  })
 			.then(function (stream) {
