@@ -376,7 +376,7 @@ function determineShape(cnt, cntArea) {
 function detectShapeWithColor(img) {
 	const src = cv.matFromImageData(img);
 	let tempSrc = src.clone();
-tr{
+try{
 let nx = (tempSrc.size().width/2) - 50;
 let ny = (tempSrc.size().height/2) - 50;
 let rect = new cv.Rect(nx, ny, 100, 100);
