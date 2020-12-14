@@ -376,11 +376,13 @@ function determineShape(cnt, cntArea) {
 function detectShapeWithColor(img) {
 	const src = cv.matFromImageData(img);
 	let tempSrc = src.clone();
+tr{
 let nx = (tempSrc.size().width/2) - 50;
 let ny = (tempSrc.size().height/2) - 50;
 let rect = new cv.Rect(nx, ny, 100, 100);
 	// const dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8UC3);
 tempSrc = tempSrc.roi(rect);
+}catch(err){ alert("YMZ :"+err);}
 	/* blurring src with gaussian blur */
 	const kernelSize = new cv.Size(5, 5);
 	cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
