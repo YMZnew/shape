@@ -145,7 +145,7 @@ function computeFrame() {
 	// /* output the frames on canvas */
 	// ctx_out.putImageData(frame, 0, 0);
 	//setTimeout(computeFrame, 0);
-requestAnimationFrame(computeFrame):
+requestAnimationFrame(computeFrame);
 }
 
 /* ----------------------------------------------- */
