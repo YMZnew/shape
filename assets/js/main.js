@@ -478,7 +478,7 @@ function detectShapeWithColor(img) {
 			//const shapeColor = detectColor(src, contours, i, cnt);
 			var labelText = contourArea+' ';
 try{
-labelText = contourArea+' ' + hierarchy.size();
+labelText = contourArea+' ' + hierarchy[0][i][3];
 }catch(e){
 alert(e);
 }
