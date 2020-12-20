@@ -476,7 +476,12 @@ function detectShapeWithColor(img) {
 
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			const labelText = contourArea+' ' + hierarchy[0,i,3]
+			var labelText = contourArea+' ';
+try{
+labelText = contourArea+' ' + hierarchy[0,i,3];
+}catch(e){
+alert(e);
+}
 			// /* generates random color */
 			// const color = new cv.Scalar(
 			// 	Math.round(Math.random() * 255),
