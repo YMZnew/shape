@@ -140,7 +140,11 @@ function computeFrame() {
 	let frame = ctx_tmp.getImageData(0, 0, c_out.width, c_out.height);
 
 	/* detect objects' shapes and colors in frame */
-	detectShapeWithColor(frame);
+	try{
+detectShapeWithColor(frame);
+}catch(e){
+alert(e);
+}
 
 	// /* output the frames on canvas */
 	// ctx_out.putImageData(frame, 0, 0);
