@@ -472,7 +472,7 @@ function detectShapeWithColor(img) {
 			
 		
 			if(shapeName == 'Triangle'){
-const parent = hierarchy.intPtr(0,i,3);
+const parent = hierarchy.intPtr(0,i)[3];
 if(parent != -1) {
 
 const ccnt = contours.get(parent);
