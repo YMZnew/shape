@@ -468,20 +468,27 @@ function detectShapeWithColor(img) {
 			
 		
 			if(shapeName == 'Triangle'){
+const parent = hierarchy.intPtr(0,i,3);
+if(parent != -1) {
 
-			/* skip unknown shapes */
-// 			if (shapeName === 'unknown') {
-// 				continue;
-// 			}
+const ccnt = contours.get(parent);
 
+		/* determine coordinates for putting label */
+		const cmoment = cv.moments(ccnt, false);
+		const cx =
+			cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
+		const cy =
+			cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
+		const corg = { cx, cy }; /* label coordinates */
+
+		const ccontourArea = cmoment['m00'];
+
+const parentShape = determineShape(ccnt, ccontourArea);
+if(parentShape == 'Triangle'){
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
 			var labelText = contourArea+' ';
-try{
-labelText = contourArea+' ' + hierarchy.intPtr(0,i);
-}catch(e){
-alert(e);
-}
+
 			// /* generates random color */
 			// const color = new cv.Scalar(
 			// 	Math.round(Math.random() * 255),
@@ -537,8 +544,12 @@ alert(e);
 				fontThickness
 			);
 				break;
-			}
+			}else {
+alert("YMZ parent = "+parentShape);
+}
 		}
+}
+}
 	}
 
 	/* display output on output-canvas */
