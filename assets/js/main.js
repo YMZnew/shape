@@ -491,7 +491,7 @@ const parentShape = determineShape(ccnt, ccontourArea);
 if(parentShape == 'Triangle'){
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			var labelText = contourArea+' ' + hierarchy.intPtr(0,i):
+			var labelText = contourArea+' ' + hierarchy.intPtr(0,i);
 
 			// /* generates random color */
 			// const color = new cv.Scalar(
@@ -511,7 +511,7 @@ if(parentShape == 'Triangle'){
 			cv.drawContours(
 				src,
 				contours,
-				i,
+				parent,
 				cntColor,
 				cntThickness,
 				cv.LINE_8,
@@ -530,7 +530,7 @@ if(parentShape == 'Triangle'){
 			cv.putText(
 				src,
 				labelText,
-				org,
+				corg,
 				fontFace,
 				fontScale,
 				fontBackColor,
@@ -541,7 +541,7 @@ if(parentShape == 'Triangle'){
 			cv.putText(
 				src,
 				labelText,
-				org,
+				corg,
 				fontFace,
 				fontScale,
 				fontColor,
