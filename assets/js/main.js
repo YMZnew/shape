@@ -491,7 +491,7 @@ const parentShape = determineShape(ccnt, ccontourArea);
 if(parentShape == 'Triangle'){
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			var labelText = contourArea+' ';
+			var labelText = contourArea+' ' + hierarchy.intPtr(0,i):
 
 			// /* generates random color */
 			// const color = new cv.Scalar(
