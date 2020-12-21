@@ -491,7 +491,7 @@ const parentShape = determineShape(ccnt, ccontourArea);
 if(parentShape == 'Triangle'){
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			var labelText = contourArea+' ' + hierarchy.intPtr(0,i);
+			var labelText = contourArea+' ';
 
 			// /* generates random color */
 			// const color = new cv.Scalar(
@@ -549,7 +549,7 @@ if(parentShape == 'Triangle'){
 			);
 				break;
 			}else {
-alert("YMZ parent = "+parentShape);
+//alert("YMZ parent = "+parentShape);
 }
 		}
 }
