@@ -490,7 +490,7 @@ if(parentShape == 'Triangle'){
 			cv.putText(
 				src,
 				labelText,
-				corg,
+				org,
 				fontFace,
 				fontScale,
 				fontBackColor,
@@ -501,12 +501,13 @@ if(parentShape == 'Triangle'){
 			cv.putText(
 				src,
 				labelText,
-				corg,
+				org,
 				fontFace,
 				fontScale,
 				fontColor,
 				fontThickness
 			);
+	document.getElementById("status").innerHTML = "text drawn";
 				break;
 			}else {
 //alert("YMZ parent = "+parentShape);
