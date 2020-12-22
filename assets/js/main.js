@@ -33,7 +33,7 @@ setTimeout(function() { startProcess(); }, 2000);
 			})
 			.catch(function (err) {
 				console.log('Something went wrong!');
-			alert('problem : '+err);
+			//alert('problem : '+err);
 			});
 	}
 	video.autoplay = true;
@@ -424,6 +424,8 @@ function detectShapeWithColor(img) {
 			if(shapeName == 'Triangle'){
 const parent = hierarchy.intPtr(0,i)[3];
 if(parent != -1) {
+	
+	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
 
 const ccnt = contours.get(parent);
 
@@ -436,13 +438,19 @@ const ccnt = contours.get(parent);
 		const corg = { cx, cy }; /* label coordinates */
 
 		const ccontourArea = cmoment['m00'];
-
+		
+	document.getElementById("status").innerHTML = "detecting parent ";
+	
 const parentShape = determineShape(ccnt, ccontourArea);
+	document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'Triangle'){
+	
+	document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
 			var labelText = contourArea+' ';
 
+	document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
 			// const color = new cv.Scalar(
 			// 	Math.round(Math.random() * 255),
@@ -469,6 +477,8 @@ if(parentShape == 'Triangle'){
 				100
 			);
 
+	document.getElementById("status").innerHTML = "shape drawn";
+	
 			const fontFace = cv.FONT_HERSHEY_DUPLEX;
 			const fontScale = 0.5;
 			const fontColor = [255, 55, 35, 255];
