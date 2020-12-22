@@ -320,6 +320,10 @@ function determineShape(cnt, cntArea) {
 
 	let sides = approx.rows;
 
+
+if(sides < 3 ){
+ alert(sides);
+}
 	if (sides === 3) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
@@ -445,7 +449,7 @@ const ccnt = contours.get(parent);
 	if (ccontourArea > 2400){
 const parentShape = determineShape(ccnt, ccontourArea);
 	//document.getElementById("status").innerHTML = "parent detected";
-if(parentShape == 'Triangle'){
+if(parentShape == 'rect){
 	
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
