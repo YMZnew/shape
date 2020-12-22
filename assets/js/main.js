@@ -427,32 +427,32 @@ function detectShapeWithColor(img) {
 const parent = hierarchy.intPtr(0,i)[2];
 if(parent != -1) {
 	
-	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
+// 	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
 
 const ccnt = contours.get(parent);
 
 		/* determine coordinates for putting label */
 		const cmoment = cv.moments(ccnt, false);
-		const cx =
-			cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
-		const cy =
-			cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
-		const corg = { cx, cy }; /* label coordinates */
+		//const cx =
+	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
+	//	const cy =
+	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
+	//	const corg = { cx, cy }; /* label coordinates */
 
 		const ccontourArea = cmoment['m00'];
 		
-	document.getElementById("status").innerHTML = "detecting parent ";
+	//document.getElementById("status").innerHTML = "detecting parent ";
 	if (ccontourArea > 2400){
 const parentShape = determineShape(ccnt, ccontourArea);
-	document.getElementById("status").innerHTML = "parent detected";
+	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'rect'){
 	
-	document.getElementById("status").innerHTML = "parent is triangle";
+	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			var labelText = contourArea+' ' + hierarchy.intPtr(0,i) ;
+// 			var labelText = contourArea+' ' + hierarchy.intPtr(0,i) ;
 
-	document.getElementById("status").innerHTML = "label set";
+	//document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
 			// const color = new cv.Scalar(
 			// 	Math.round(Math.random() * 255),
@@ -479,7 +479,7 @@ if(parentShape == 'rect'){
 				0
 			);
 
-	document.getElementById("status").innerHTML = "shape drawn";
+	//document.getElementById("status").innerHTML = "shape drawn";
 	
 			const fontFace = cv.FONT_HERSHEY_DUPLEX;
 			const fontScale = 0.5;
@@ -489,27 +489,27 @@ if(parentShape == 'rect'){
 			const fontBackThickness = 2;
 
 			/* font border */
-			cv.putText(
-				src,
-				labelText,
-				org,
-				fontFace,
-				fontScale,
-				fontBackColor,
-				fontBackThickness
-			);
+// 			cv.putText(
+// 				src,
+// 				labelText,
+// 				org,
+// 				fontFace,
+// 				fontScale,
+// 				fontBackColor,
+// 				fontBackThickness
+// 			);
 
 			/* put label on detected shape */
-			cv.putText(
-				src,
-				labelText,
-				org,
-				fontFace,
-				fontScale,
-				fontColor,
-				fontThickness
-			);
-	document.getElementById("status").innerHTML = "text drawn";
+// 			cv.putText(
+// 				src,
+// 				labelText,
+// 				org,
+// 				fontFace,
+// 				fontScale,
+// 				fontColor,
+// 				fontThickness
+// 			);
+	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			}
 }
