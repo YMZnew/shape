@@ -321,9 +321,9 @@ function determineShape(cnt, cntArea) {
 	let sides = approx.rows;
 
 
-if(sides < 3 ){
- alert(sides);
-}
+// if(sides < 3 ){
+//  alert(sides);
+// }
 	if (sides === 3) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
@@ -446,7 +446,7 @@ const ccnt = contours.get(parent);
 		const ccontourArea = cmoment['m00'];
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
-	if (ccontourArea > 2400){
+	if (ccontourArea > 2000){
 const parentShape = determineShape(ccnt, ccontourArea);
 	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'rect'){
