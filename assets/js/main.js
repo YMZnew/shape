@@ -442,7 +442,7 @@ const ccnt = contours.get(parent);
 		const ccontourArea = cmoment['m00'];
 		
 	document.getElementById("status").innerHTML = "detecting parent ";
-	
+	if (ccontourArea > 2400){
 const parentShape = determineShape(ccnt, ccontourArea);
 	document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'rect'){
@@ -511,7 +511,9 @@ if(parentShape == 'rect'){
 			);
 	document.getElementById("status").innerHTML = "text drawn";
 				break;
-			}else {
+			}
+}
+else {
 //alert("YMZ parent = "+parentShape);
 }
 		}
