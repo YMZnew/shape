@@ -474,7 +474,7 @@ if(parentShape == 'Triangle'){
 				cntThickness,
 				cv.LINE_8,
 				hierarchy,
-				100
+				0
 			);
 
 	document.getElementById("status").innerHTML = "shape drawn";
