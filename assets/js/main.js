@@ -322,56 +322,6 @@ function determineShape(cnt, cntArea) {
 
 	if (sides === 3) {
 		shape = 'Triangle';
-	} else if (sides === 4) {
-		const rect = cv.boundingRect(cnt);
-		const aspectRatio = rect.width / rect.height;
-
-		if (aspectRatio > 0.95 && aspectRatio < 1.05) {
-			shape = 'Square';
-		} else {
-			shape = 'Rectangle';
-		}
-	} else if (sides === 5) {
-		shape = 'Pentagon';
-	} else if (sides === 6) {
-		shape = 'Hexagon';
-	} else if (sides > 7 && sides < 16) {
-		epsilon = 0.01 * perimeter;
-
-		/* approximate cnt with approxPolyDP */
-		cv.approxPolyDP(cnt, approx, epsilon, true);
-
-		sides = approx.rows;
-
-		approx.delete();
-
-		/* circles usually have 16 sides */
-		if (sides < 17) {
-			if (sides === 8) {
-				shape = 'Octagon';
-				return shape;
-			}
-
-			const circleBoundingRect = cv.boundingRect(cnt);
-			const circleBoundingRectAspectRatio =
-				circleBoundingRect.width / circleBoundingRect.height;
-			const circleBoundingRectArea =
-				circleBoundingRect.width * circleBoundingRect.height;
-			const circularArea = cntArea;
-			const circularAreaRatio = circleBoundingRectArea / circularArea;
-
-			// console.log(circularAreaRatio);
-
-			if (circularAreaRatio >= 1.27 && circularAreaRatio <= 1.36) {
-				shape = 'Ellipse';
-				if (
-					circleBoundingRectAspectRatio > 0.95 &&
-					circleBoundingRectAspectRatio < 1.05
-				) {
-					shape = 'Circle';
-				}
-			}
-		}
 	}
 
 	return shape;
@@ -511,7 +461,7 @@ if(parentShape == 'Triangle'){
 			cv.drawContours(
 				src,
 				contours,
-				parent,
+				i,
 				cntColor,
 				cntThickness,
 				cv.LINE_8,
