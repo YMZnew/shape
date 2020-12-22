@@ -422,7 +422,7 @@ function detectShapeWithColor(img) {
 			
 		
 			if(shapeName == 'Triangle'){
-const parent = hierarchy.intPtr(0,i)[3];
+const parent = hierarchy.intPtr(0,i)[2];
 if(parent != -1) {
 	
 	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
