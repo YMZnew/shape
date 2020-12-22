@@ -446,7 +446,7 @@ const ccnt = contours.get(parent);
 		const ccontourArea = cmoment['m00'];
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
-	if (ccontourArea > 2000){
+	if (ccontourArea > 1000){
 const parentShape = determineShape(ccnt, ccontourArea);
 	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'rect'){
@@ -454,7 +454,7 @@ if(parentShape == 'rect'){
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-// 			var labelText = contourArea+' ' + hierarchy.intPtr(0,i) ;
+ 			var labelText = ccontourArea+' ' ;
 
 	//document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
@@ -493,26 +493,27 @@ if(parentShape == 'rect'){
 			const fontBackThickness = 2;
 
 			/* font border */
-// 			cv.putText(
-// 				src,
-// 				labelText,
-// 				org,
-// 				fontFace,
-// 				fontScale,
-// 				fontBackColor,
-// 				fontBackThickness
-// 			);
+
+ 			cv.putText(
+ 				src,
+				labelText,
+				org,
+				fontFace,
+				fontScale,
+				fontBackColor,
+				fontBackThickness
+			);
 
 			/* put label on detected shape */
-// 			cv.putText(
-// 				src,
-// 				labelText,
-// 				org,
-// 				fontFace,
-// 				fontScale,
-// 				fontColor,
-// 				fontThickness
-// 			);
+ 			cv.putText(
+ 				src,
+ 				labelText,
+				org,
+				fontFace,
+				fontScale,
+				fontColor,
+ 				fontThickness
+ 			);
 	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			}
