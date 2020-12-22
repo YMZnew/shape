@@ -322,7 +322,9 @@ function determineShape(cnt, cntArea) {
 
 	if (sides === 3) {
 		shape = 'Triangle';
-	}
+	}else if (sides === 4) {
+shape = "rect";
+}
 
 	return shape;
 }
@@ -443,7 +445,7 @@ const ccnt = contours.get(parent);
 	
 const parentShape = determineShape(ccnt, ccontourArea);
 	document.getElementById("status").innerHTML = "parent detected";
-if(parentShape == 'Triangle'){
+if(parentShape == 'rect'){
 	
 	document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
