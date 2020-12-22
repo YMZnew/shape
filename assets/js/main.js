@@ -448,7 +448,7 @@ if(parentShape == 'Triangle'){
 	document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-			var labelText = contourArea+' ';
+			var labelText = contourArea+' ' + hierarchy.intPtr(0,i) ;
 
 	document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
