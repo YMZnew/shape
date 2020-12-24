@@ -432,7 +432,7 @@ function detectShapeWithColor(img) {
 			const shapeName = determineShape(cnt, contourArea,false);
 			
 		
-			if(shapeName == 'Triangle'){
+			if(shapeName == 'rect'){
 const parent = hierarchy.intPtr(0,i)[2];
 if(parent != -1) {
 	
@@ -454,7 +454,7 @@ const ccnt = contours.get(parent);
 	if (ccontourArea > 1000){
 const parentShape = determineShape(ccnt, ccontourArea,true);
 	//document.getElementById("status").innerHTML = "parent detected";
-if(parentShape == 'rect'){
+if(parentShape == 'Triangle'){
 	
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
