@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU);
+	cv.threshold(tempSrc, tempSrc, 0, 255, cv.THRESH_BINARY_INV+cv.THRESH_OTSU);
 
 	/* find contours */
 	let contours = new cv.MatVector();
