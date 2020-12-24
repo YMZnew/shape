@@ -312,7 +312,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 function determineShape(cnt, cntArea,isSecond) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
-	let epsilon = 0.01 * perimeter;
+	let epsilon = 0.02 * perimeter;
 	let approx = new cv.Mat();
 
 	/* approximate cnt with approxPolyDP */
@@ -326,7 +326,7 @@ function determineShape(cnt, cntArea,isSecond) {
 // if(sides < 3 ){
 //  alert(sides);
 // }
-	if (sides >= 9) {
+	if (sides >= 9 && sides <= 10 ) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
