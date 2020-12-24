@@ -425,7 +425,7 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 2400) {
+		if (contourArea > 1400) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
@@ -451,7 +451,7 @@ const ccnt = contours.get(parent);
 		const ccontourArea = cmoment['m00'];
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
-	if (ccontourArea > 1000){
+	if (ccontourArea > 700){
 const parentShape = determineShape(ccnt, ccontourArea,true);
 	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'Triangle'){
