@@ -351,14 +351,14 @@ function detectShapeWithColor(img) {
 //}catch(err){ alert("YMZ :"+err);}
 	/* blurring src with gaussian blur */
 	const kernelSize = new cv.Size(5, 5);
-	cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
+	//cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
 
 	/* convert src to grayscale image */
 	cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
 
 	/* canny edge detection */
 	// cv.Canny(src, src, 20, 80, 3, true);
-	cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
+	//cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
 
 	// /* morphological operation (dilate) */
 	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
@@ -374,10 +374,10 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* morphological operation (closing) */
-	const M = cv.Mat.ones(5, 5, cv.CV_8U);
-	cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
+	//const M = cv.Mat.ones(5, 5, cv.CV_8U);
+	//cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
 
-	M.delete();
+	//M.delete();
 
 	// /* adaptive thresholding with gaussian method */
 	// cv.adaptiveThreshold(
@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 245, 255, cv.THRESH_BINARY);
+	cv.threshold(tempSrc, tempSrc, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU);
 
 	/* find contours */
 	let contours = new cv.MatVector();
