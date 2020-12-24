@@ -434,7 +434,7 @@ function detectShapeWithColor(img) {
 		
 			if(shapeName == 'rect'){
 const parent = hierarchy.intPtr(0,i)[2];
-if(parent != -1 && hierarchy.intPtr(0,parent)[2] ===1 ) {
+if(parent != -1 && hierarchy.intPtr(0,parent)[2] === -1 ) {
 	
 // 	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
 
