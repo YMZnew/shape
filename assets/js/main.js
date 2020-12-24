@@ -321,7 +321,7 @@ function determineShape(cnt, cntArea,isSecond) {
 	let sides = approx.rows;
 if(isSecond){
 document.getElementById("status").InnerHTML = "sides = "+ sides;
-//alert(sides);
+alert(sides);
 }
 // if(sides < 3 ){
 //  alert(sides);
