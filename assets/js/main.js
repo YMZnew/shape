@@ -309,7 +309,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 /* ---------- Shape Detection functions ---------- */
 
 /* determine shapes based on sides */
-function determineShape(cnt, cntArea) {
+function determineShape(cnt, cntArea,isSecond) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
 	let epsilon = 0.02 * perimeter;
@@ -319,8 +319,8 @@ function determineShape(cnt, cntArea) {
 	cv.approxPolyDP(cnt, approx, epsilon, true);
 
 	let sides = approx.rows;
-
-
+if(isSecond)
+document.getElementById("status").InnerHTML = "sides = "+ sides;
 // if(sides < 3 ){
 //  alert(sides);
 // }
@@ -328,10 +328,10 @@ function determineShape(cnt, cntArea) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
-}else{
-	document.getElementById("status").InnerHTML = "sides = "+ sides;
-// 	document.getElementById("status").innerHTML = 
 }
+	//document.getElementById("status").InnerHTML = "sides = "+ sides;
+// 	document.getElementById("status").innerHTML = 
+
 
 	return shape;
 }
@@ -427,7 +427,7 @@ function detectShapeWithColor(img) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
-			const shapeName = determineShape(cnt, contourArea);
+			const shapeName = determineShape(cnt, contourArea,false);
 			
 		
 			if(shapeName == 'Triangle'){
@@ -450,7 +450,7 @@ const ccnt = contours.get(parent);
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
 	if (ccontourArea > 1000){
-const parentShape = determineShape(ccnt, ccontourArea);
+const parentShape = determineShape(ccnt, ccontourArea,true);
 	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'rect'){
 	
