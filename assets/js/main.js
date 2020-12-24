@@ -319,8 +319,10 @@ function determineShape(cnt, cntArea,isSecond) {
 	cv.approxPolyDP(cnt, approx, epsilon, true);
 
 	let sides = approx.rows;
-if(isSecond)
+if(isSecond){
 document.getElementById("status").InnerHTML = "sides = "+ sides;
+alert(sides);
+}
 // if(sides < 3 ){
 //  alert(sides);
 // }
