@@ -425,7 +425,7 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 1000 && hierarchy.intPtr(0,i)[3] === -1 && hierarchy.intPtr(0,i)[2] != -1 ) {
+		if (contourArea > 10 && hierarchy.intPtr(0,i)[2] != -1 ) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
