@@ -425,7 +425,7 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 0 ) {
+		if (contourArea > 300 ) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
