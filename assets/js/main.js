@@ -329,7 +329,8 @@ function determineShape(cnt, cntArea) {
 	}else if (sides === 4) {
 shape = "rect";
 }else{
-	document.getEelementById("status").InnerHTML = "sides = "+ sides;
+	document.getElementById("status").InnerHTML = "sides = "+ sides;
+// 	document.getElementById("status").innerHTML = 
 }
 
 	return shape;
