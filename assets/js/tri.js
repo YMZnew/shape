@@ -326,7 +326,7 @@ function determineShape(cnt, cntArea,isSecond) {
 // if(sides < 3 ){
 //  alert(sides);
 // }
-	if (sides === 3) {
+	if (sides === 10) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
