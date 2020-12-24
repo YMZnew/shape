@@ -328,6 +328,8 @@ function determineShape(cnt, cntArea) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
+}else{
+	document.getEelementById("status").InnerHTML = "sides = "+ sides;
 }
 
 	return shape;
