@@ -309,7 +309,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 /* ---------- Shape Detection functions ---------- */
 
 /* determine shapes based on sides */
-function determineShape(cnt, cntArea,isSecond) {
+function determineShape(cnt) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
 	let epsilon = 0.04 * perimeter;
@@ -429,16 +429,17 @@ function detectShapeWithColor(img) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
-			const shapeName = determineShape(cnt, contourArea,false);
+			const shapeName = determineShape(cnt);
 			
 		
-			if(shapeName == 'Triangle'){
-//const parent = hierarchy.intPtr(0,i)[2];
-//if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
+			if(shapeName == 'rect'){
+				
+const parent = hierarchy.intPtr(0,i)[2];
+if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 	
 // 	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
 
-//const ccnt = contours.get(parent);
+const ccnt = contours.get(parent);
 
 		/* determine coordinates for putting label */
 		//const cmoment = cv.moments(ccnt, false);
@@ -452,9 +453,9 @@ function detectShapeWithColor(img) {
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
 	//if (ccontourArea > 100){
-//const parentShape = determineShape(ccnt, ccontourArea,true);
+const parentShape = determineShape(ccnt);
 	//document.getElementById("status").innerHTML = "parent detected";
-//if(parentShape == 'Triangle'){
+if(parentShape == 'Triangle'){
 	
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
@@ -524,12 +525,15 @@ function detectShapeWithColor(img) {
 	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			
+}
+}
 
 //alert("YMZ parent = "+parentShape);
 
 }
 }
 	}
+			
 
 	/* display output on output-canvas */
 	cv.imshow('output-canvas', src);
