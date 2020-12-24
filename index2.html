@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Real-time Shape and Color Detection with OpenCV.js</title>
+		<!-- css -->
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+		<div class="container">
+			<hr>shape detection version 0.6.0</hr>
+			<div class="content-wrapper">
+				<div class="content">
+					
+<!-- 					<div class="video-src-selector">
+						<input type="file" id="videoFile" name="videoFile" />
+					</div> -->
+					<div class="media-wrapper">
+						<!-- original video -->
+						<div class="input-content">
+							<div class="video-wrapper">
+								<video
+									id="video"
+									src="#"
+									loop
+									controls
+									muted
+								></video>
+							</div>
+						</div>
+
+						<!-- processed video -->
+						<p id="status">status</p>
+						<div class="output-content">
+							<div id="outputVideoWrapper">
+								<canvas
+									id="output-canvas"
+								></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- script -->
+		<script src="assets/js/rect.js"></script>
+		<script
+			async
+			src="assets/js/vendor/opencv.js"
+			onload="onOpenCvReady();"
+		></script>
+	</body>
+</html>
