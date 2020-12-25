@@ -312,7 +312,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 function determineShape(cnt) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
-	let epsilon = 0.04 * perimeter;
+	let epsilon = 0.01 * perimeter;
 	let approx = new cv.Mat();
 
 	/* approximate cnt with approxPolyDP */
@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 0, 255, cv.CHAIN_APPROX_NONE);
+	cv.threshold(tempSrc, tempSrc, 240, 255, cv.CHAIN_APPROX_NONE);
 
 	/* find contours */
 	let contours = new cv.MatVector();
