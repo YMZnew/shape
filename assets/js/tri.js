@@ -532,7 +532,7 @@ if(parentShape == 'Triangle'){
 
 }
 }
-	
+	}
 			
 
 	/* display output on output-canvas */
