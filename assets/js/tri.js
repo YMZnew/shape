@@ -432,7 +432,7 @@ function detectShapeWithColor(img) {
 			const shapeName = determineShape(cnt, contourArea,false);
 			
 		
-			if(shapeName == 'rect'){
+			if(shapeName == 'Triangle'){
 //const parent = hierarchy.intPtr(0,i)[2];
 //if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 	
