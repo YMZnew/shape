@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 0, 255, cv.THRESH_BINARY_INV+cv.THRESH_OTSU);
+	cv.threshold(tempSrc, tempSrc, 0, 255, cv.CHAIN_APPROX_NONE);
 
 	/* find contours */
 	let contours = new cv.MatVector();
@@ -425,7 +425,7 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 300 ) {
+		if (contourArea > 100 ) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
