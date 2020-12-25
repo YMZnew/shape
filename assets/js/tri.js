@@ -572,7 +572,7 @@ function detectShapeWithColor(img) {
 	cv.imshow('output-canvas', src);
  var nimg = document.getElementById("ymz");
 	
-	ctx_out.drawImage(nimg,x,y);
+	ctx_out.drawImage(nimg,x,y,30,30);
 
 	contours.delete();
 	hierarchy.delete();
