@@ -15,18 +15,12 @@ let ctx_out;
 let c_tmp;
 let ctx_tmp;
 
-var scene = new THREE.Scene();
-          var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight);
-          var renderer = new THREE.WebGLRenderer({antialias: true});
-          renderer.setSize(window.innerWidth,window.innerHeight);
-          $('body').append(renderer.domElement);
-          var geometry = new THREE.BoxGeometry(1,1,1);
-          var material = new THREE.MeshBasicMaterial({color: 0xff0000});
-          var cube = new THREE.Mesh(geometry,material);
-          scene.add(cube);
-          cube.position.z = 1;
-          cube.rotation.x = 10;
-          cube.rotation.y = 5;
+let scene ;
+let sCamera;
+let renderer;
+let gemotery;
+let material;
+let cube;
 
 
 
@@ -145,6 +139,22 @@ function processVideo() {
 
 	video.play();
 
+	scene = new THREE.Scene();
+           sCamera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight);
+           renderer = new THREE.WebGLRenderer({antialias: true});
+          //renderer.setSizecanvasWidth,window.innerHeight);
+	renderer.setSize(canvasWidth,canvasHeight);
+          $('body').append(renderer.domElement);
+           geometry = new THREE.BoxGeometry(1,1,1);
+           material = new THREE.MeshBasicMaterial({color: 0xff0000});
+          cube = new THREE.Mesh(geometry,material);
+          scene.add(cube);
+          cube.position.z = 1;
+          cube.rotation.x = 10;
+          cube.rotation.y = 5;
+          renderer.render(scene,sCamera);
+	
+	
 	computeFrame();
 }
 
@@ -451,7 +461,7 @@ function detectShapeWithColor(img) {
 				
 				cube.position.x = x;
 				cube.position.y= y;
-				renderer.render(scene,camera);
+				renderer.render(scene,sCamera);
 				
 				
 				
