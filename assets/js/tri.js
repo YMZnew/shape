@@ -15,6 +15,21 @@ let ctx_out;
 let c_tmp;
 let ctx_tmp;
 
+var scene = new THREE.Scene();
+          var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight);
+          var renderer = new THREE.WebGLRenderer({antialias: true});
+          renderer.setSize(window.innerWidth,window.innerHeight);
+          $('body').append(renderer.domElement);
+          var geometry = new THREE.BoxGeometry(1,1,1);
+          var material = new THREE.MeshBasicMaterial({color: 0xff0000});
+          var cube = new THREE.Mesh(geometry,material);
+          scene.add(cube);
+          cube.position.z = 1;
+          cube.rotation.x = 10;
+          cube.rotation.y = 5;
+
+
+
 /* webcam start function */
 function startWebcam() {
 	isVideoSet = true;
@@ -433,6 +448,14 @@ function detectShapeWithColor(img) {
 			
 		
 			if(shapeName == 'Triangle'){
+				
+				cube.position.x = x;
+				cube.position.y= y;
+				renderer.render(scene,camera);
+				
+				
+				
+				
 //const parent = hierarchy.intPtr(0,i)[2];
 //if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 	
@@ -477,7 +500,7 @@ function detectShapeWithColor(img) {
 			const cntThickness = 2;
 
 			/* draw contours on output canvas */
-			cv.drawContours(
+			/*cv.drawContours(
 				src,
 				contours,
 				i,
@@ -486,7 +509,7 @@ function detectShapeWithColor(img) {
 				cv.LINE_8,
 				hierarchy,
 				0
-			);
+			);*/
 
 	//document.getElementById("status").innerHTML = "shape drawn";
 	
@@ -499,7 +522,7 @@ function detectShapeWithColor(img) {
 
 			/* font border */
 
- 			cv.putText(
+ 			/*cv.putText(
  				src,
 				labelText,
 				org,
@@ -507,10 +530,10 @@ function detectShapeWithColor(img) {
 				fontScale,
 				fontBackColor,
 				fontBackThickness
-			);
+			);*/
 
 			/* put label on detected shape */
- 			cv.putText(
+ 			/*cv.putText(
  				src,
  				labelText,
 				org,
@@ -518,7 +541,7 @@ function detectShapeWithColor(img) {
 				fontScale,
 				fontColor,
  				fontThickness
- 			);
+ 			);*/
 	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			
@@ -545,6 +568,8 @@ function startProcess() {
 // 		startBtn.style.cursor = 'progress';
 // 		startBtn.disabled = true;
 
+         // renderer.render(scene,camera);
+		
 		processVideo();
 
 		/* make output canvas visible */
