@@ -141,7 +141,9 @@ function processVideo() {
 
 	scene = new THREE.Scene();
            sCamera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight);
-           renderer = new THREE.WebGLRenderer({antialias: true});
+     // canvasElm = document.getElementById('canvas'); renderer = new THREE.WebGLRenderer( { canvas: canvasElm } );   
+
+  renderer = new THREE.WebGLRenderer({canvas:c_out , antialias: true});
           //renderer.setSizecanvasWidth,window.innerHeight);
 	renderer.setSize(canvasWidth,canvasHeight);
           $('#outputVideoWrapper').append(renderer.domElement);
