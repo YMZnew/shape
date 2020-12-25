@@ -462,7 +462,7 @@ if(parentShape == 'Triangle'){
 			//const shapeColor = detectColor(src, contours, i, cnt);
 				//var child  = hierarchy.intPtr(0,i)[2];
 				//var parent = hierarchy.intPtr(0,i)[3];
- 			var labelText = contourArea /*+' child = ' +   child + ' parent = '+ parent*/;
+ 			var labelText = contourArea + " " /*+' child = ' +   child + ' parent = '+ parent*/;
 
 	//document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
