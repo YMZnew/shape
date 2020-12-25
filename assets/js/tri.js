@@ -153,6 +153,7 @@ function processVideo() {
           cube.rotation.x = 10;
           cube.rotation.y = 5;
           renderer.render(scene,sCamera);
+alert("YMZ");
 	
 	
 	computeFrame();
@@ -459,9 +460,9 @@ function detectShapeWithColor(img) {
 		
 			if(shapeName == 'Triangle'){
 				
-				cube.position.x = x;
-				cube.position.y= y;
-				renderer.render(scene,sCamera);
+				//cube.position.x = x;
+				//cube.position.y= y;
+				//renderer.render(scene,sCamera);
 				
 				
 				
@@ -475,7 +476,7 @@ function detectShapeWithColor(img) {
 
 		/* determine coordinates for putting label */
 		//const cmoment = cv.moments(ccnt, false);
-		//const cx =
+		//const cx canvasWidth
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
 	//	const cy =
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
