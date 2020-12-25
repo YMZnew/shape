@@ -22,6 +22,9 @@ let gemotery;
 let material;
 let cube;
 
+let x;
+let y;
+
 
 
 /* webcam start function */
@@ -139,7 +142,7 @@ function processVideo() {
 
 	video.play();
 
-	scene = new THREE.Scene();
+	/*scene = new THREE.Scene();
            sCamera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight);
      // canvasElm = document.getElementById('canvas'); renderer = new THREE.WebGLRenderer( { canvas: canvasElm } );   
 
@@ -154,7 +157,7 @@ function processVideo() {
           cube.position.z = 1;
           cube.rotation.x = 10;
           cube.rotation.y = 5;
-          renderer.render(scene,sCamera);
+          renderer.render(scene,sCamera);*/
 alert("YMZ");
 	
 	
@@ -441,9 +444,9 @@ function detectShapeWithColor(img) {
 
 		/* determine coordinates for putting label */
 		const moment = cv.moments(cnt, false);
-		const x =
+		x =
 			moment['m00'] === 0 ? 0 : Math.round(moment['m10'] / moment['m00']);
-		const y =
+		y =
 			moment['m00'] === 0 ? 0 : Math.round(moment['m01'] / moment['m00']);
 		const org = { x, y }; /* label coordinates */
 
@@ -567,7 +570,9 @@ function detectShapeWithColor(img) {
 
 	/* display output on output-canvas */
 	cv.imshow('output-canvas', src);
-
+ var nimg = document.getElementById("ymz");
+	
+	ctx_out.drawImage(nimg,x,y);
 
 	contours.delete();
 	hierarchy.delete();
