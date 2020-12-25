@@ -144,7 +144,7 @@ function processVideo() {
            renderer = new THREE.WebGLRenderer({antialias: true});
           //renderer.setSizecanvasWidth,window.innerHeight);
 	renderer.setSize(canvasWidth,canvasHeight);
-          $('body').append(renderer.domElement);
+          $('#outputVideoWrapper').append(renderer.domElement);
            geometry = new THREE.BoxGeometry(1,1,1);
            material = new THREE.MeshBasicMaterial({color: 0xff0000});
           cube = new THREE.Mesh(geometry,material);
@@ -565,6 +565,7 @@ function detectShapeWithColor(img) {
 
 	/* display output on output-canvas */
 	cv.imshow('output-canvas', src);
+
 
 	contours.delete();
 	hierarchy.delete();
