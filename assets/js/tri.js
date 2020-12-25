@@ -425,7 +425,7 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 100 ) {
+		if (contourArea > 300 ) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
@@ -442,17 +442,17 @@ if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 const ccnt = contours.get(parent);
 
 		/* determine coordinates for putting label */
-		//const cmoment = cv.moments(ccnt, false);
+		const cmoment = cv.moments(ccnt, false);
 		//const cx =
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
 	//	const cy =
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
 	//	const corg = { cx, cy }; /* label coordinates */
 
-		//const ccontourArea = cmoment['m00'];
+		const ccontourArea = cmoment['m00'];
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
-	//if (ccontourArea > 100){
+	if (ccontourArea > 100){
 const parentShape = determineShape(ccnt);
 	//document.getElementById("status").innerHTML = "parent detected";
 if(parentShape == 'Triangle'){
@@ -532,6 +532,7 @@ if(parentShape == 'Triangle'){
 
 }
 }
+		}
 	}
 			
 
