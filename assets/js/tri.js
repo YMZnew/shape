@@ -309,7 +309,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 /* ---------- Shape Detection functions ---------- */
 
 /* determine shapes based on sides */
-function determineShape(cnt) {
+function determineShape(cnt, cntArea,isSecond) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
 	let epsilon = 0.04 * perimeter;
@@ -326,7 +326,7 @@ function determineShape(cnt) {
 // if(sides < 3 ){
 //  alert(sides);
 // }
-	if (sides === 10 ) {
+	if (sides === 10) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
@@ -351,14 +351,14 @@ function detectShapeWithColor(img) {
 //}catch(err){ alert("YMZ :"+err);}
 	/* blurring src with gaussian blur */
 	const kernelSize = new cv.Size(5, 5);
-	//cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
+	cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
 
 	/* convert src to grayscale image */
 	cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
 
 	/* canny edge detection */
 	// cv.Canny(src, src, 20, 80, 3, true);
-	//cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
+	cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
 
 	// /* morphological operation (dilate) */
 	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
@@ -374,10 +374,10 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* morphological operation (closing) */
-	//const M = cv.Mat.ones(5, 5, cv.CV_8U);
-	//cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
+	const M = cv.Mat.ones(5, 5, cv.CV_8U);
+	cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
 
-	//M.delete();
+	M.delete();
 
 	// /* adaptive thresholding with gaussian method */
 	// cv.adaptiveThreshold(
@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 240, 255, cv.CHAIN_APPROX_NONE);
+	cv.threshold(tempSrc, tempSrc, 245, 255, cv.THRESH_BINARY);
 
 	/* find contours */
 	let contours = new cv.MatVector();
@@ -425,15 +425,14 @@ function detectShapeWithColor(img) {
 		/* exclude smaller contours for reducing noise */
 
 /* default 1000 */
-		if (contourArea > 100 ) {
+		if (contourArea > 100) {
 			// console.log(contourArea);
 
 			/* get the shape of current cnt */
-			const shapeName = determineShape(cnt);
+			const shapeName = determineShape(cnt, contourArea,false);
 			
 		
-			if(shapeName == 'Triangle'){
-				
+			if(shapeName == 'rect'){
 //const parent = hierarchy.intPtr(0,i)[2];
 //if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 	
@@ -453,16 +452,14 @@ function detectShapeWithColor(img) {
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
 	//if (ccontourArea > 100){
-//const parentShape = determineShape(ccnt);
+//const parentShape = determineShape(ccnt, ccontourArea,true);
 	//document.getElementById("status").innerHTML = "parent detected";
 //if(parentShape == 'Triangle'){
 	
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
 			//const shapeColor = detectColor(src, contours, i, cnt);
-				//var child  = hierarchy.intPtr(0,i)[2];
-				//var parent = hierarchy.intPtr(0,i)[3];
- 			var labelText = contourArea + " " /*+' child = ' +   child + ' parent = '+ parent*/;
+ 			var labelText = contourArea+' ' ;
 
 	//document.getElementById("status").innerHTML = "label set";
 			// /* generates random color */
@@ -525,16 +522,12 @@ function detectShapeWithColor(img) {
 	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			
-//}
-//}
 
 //alert("YMZ parent = "+parentShape);
 
-//}
 }
-		}
+}
 	}
-			
 
 	/* display output on output-canvas */
 	cv.imshow('output-canvas', src);
