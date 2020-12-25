@@ -326,7 +326,7 @@ function determineShape(cnt) {
 // if(sides < 3 ){
 //  alert(sides);
 // }
-	if (sides === 3 ) {
+	if (sides === 10 ) {
 		shape = 'Triangle';
 	}else if (sides === 4) {
 shape = "rect";
@@ -432,30 +432,30 @@ function detectShapeWithColor(img) {
 			const shapeName = determineShape(cnt);
 			
 		
-			if(shapeName == 'rect'){
+			if(shapeName == 'Triangle'){
 				
-const parent = hierarchy.intPtr(0,i)[2];
-if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
+//const parent = hierarchy.intPtr(0,i)[2];
+//if(parent != -1 /*&& hierarchy.intPtr(0,parent)[2] === -1 */) {
 	
 // 	document.getElementById("status").innerHTML = "i = "+ i+ "triangle parent = " + parent;
 
-const ccnt = contours.get(parent);
+//const ccnt = contours.get(parent);
 
 		/* determine coordinates for putting label */
-		const cmoment = cv.moments(ccnt, false);
+		//const cmoment = cv.moments(ccnt, false);
 		//const cx =
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m10'] / cmoment['m00']);
 	//	const cy =
 	//		cmoment['m00'] === 0 ? 0 : Math.round(cmoment['m01'] / cmoment['m00']);
 	//	const corg = { cx, cy }; /* label coordinates */
 
-		const ccontourArea = cmoment['m00'];
+		//const ccontourArea = cmoment['m00'];
 		
 	//document.getElementById("status").innerHTML = "detecting parent ";
-	if (ccontourArea > 100){
-const parentShape = determineShape(ccnt);
+	//if (ccontourArea > 100){
+//const parentShape = determineShape(ccnt);
 	//document.getElementById("status").innerHTML = "parent detected";
-if(parentShape == 'Triangle'){
+//if(parentShape == 'Triangle'){
 	
 	//document.getElementById("status").innerHTML = "parent is triangle";
 			/* get color of current cnt */
@@ -525,12 +525,12 @@ if(parentShape == 'Triangle'){
 	//document.getElementById("status").innerHTML = "text drawn";
 				break;
 			
-}
-}
+//}
+//}
 
 //alert("YMZ parent = "+parentShape);
 
-}
+//}
 }
 		}
 	}
