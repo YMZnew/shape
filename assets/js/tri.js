@@ -1,40 +1,5 @@
-let isVideoSet = false;
-// const videoFile = document.getElementById('videoFile');
-const video = document.getElementById('video');
-const srcStatusText = document.getElementById('srcStatusText');
 
-const startBtn = document.querySelector('.start-button');
-const outputCanvas = document.getElementById('output-canvas');
-const outputVideoWrapper = document.getElementById('outputVideoWrapper');
-
-let canvasWidth;
-let canvasHeight;
-
-let c_out;
-let ctx_out;
-let c_tmp;
-let ctx_tmp;
-
-let scene ;
-let sCamera;
-let renderer;
-let gemotery;
-let material;
-let cube;
-
-let x;
-let y;
-
-
-
-/* webcam start function */
-function startWebcam() {
-	isVideoSet = true;
-	if (navigator.mediaDevices.getUserMedia) {
-		navigator.mediaDevices
-			.getUserMedia({ 
-video: { 
-width: { min: 240, max:360  },
+},
 		height: { min: 240, max: 360 }
 }
  })
@@ -84,7 +49,7 @@ setTimeout(function() { startProcess(); }, 2000);
 // 		}
 // 	},
 // 	false
-// );
+// );p
 
 /* set output canvas resolution */
 video.addEventListener(
@@ -109,8 +74,7 @@ video.addEventListener(
 
 		canvasHeight = Math.ceil(
 			canvasWidth / (video.videoWidth / video.videoHeight)
-		);
-
+		
 		// canvasWidth = video.offsetWidth;
 		// canvasHeight = Math.ceil(
 		// 	canvasWidth / (video.videoWidth / video.videoHeight)
@@ -118,9 +82,7 @@ video.addEventListener(
 
 		/* set canvas size based on the image container */
 		outputCanvas.setAttribute('width', canvasWidth);
-		outputCanvas.setAttribute('height', canvasHeight);
-	},
-	false
+		outputCanvas.setAttribute('heig
 );
 
 /* opencv load status log */
