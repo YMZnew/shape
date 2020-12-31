@@ -312,7 +312,7 @@ function detectColor(src, contours, cntIndex, cnt) {
 function determineShape(cnt, cntArea,isSecond) {
 	let shape = 'unknown';
 	const perimeter = cv.arcLength(cnt, true);
-	let epsilon = 100;// 0.04 * perimeter
+	let epsilon = 0.04 * perimeter
 	let approx = new cv.Mat();
 
 	/* approximate cnt with approxPolyDP */
@@ -351,14 +351,14 @@ function detectShapeWithColor(img) {
 //}catch(err){ alert("YMZ :"+err);}
 	/* blurring src with gaussian blur */
 	const kernelSize = new cv.Size(5, 5);
-	cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
+	//cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
 
 	/* convert src to grayscale image */
-	cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
+	//cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
 
 	/* canny edge detection */
 	// cv.Canny(src, src, 20, 80, 3, true);
-	cv.Canny(tempSrc, tempSrc, 20, 100, 3, false);
+	cv.Canny(tempSrc, tempSrc, 46, 101, 3, false);
 
 	// /* morphological operation (dilate) */
 	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
@@ -374,8 +374,8 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* morphological operation (closing) */
-	const M = cv.Mat.ones(5, 5, cv.CV_8U);
-	cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
+	//const M = cv.Mat.ones(5, 5, cv.CV_8U);
+	//cv.morphologyEx(tempSrc, tempSrc, cv.MORPH_CLOSE, M);
 
 	M.delete();
 
