@@ -405,7 +405,7 @@ function detectShapeWithColor(img) {
 		cv.CHAIN_APPROX_NONE
 	);
 
-	tempSrc.delete();
+	//tempSrc.delete();
 
 	/* check every contour to detect shape */
 	for (let i = 0; i < contours.size(); i++) {
@@ -478,7 +478,7 @@ if(parentShape == 'Triangle'){
 
 			/* draw contours on output canvas */
 			cv.drawContours(
-				src,
+				tempSrc,
 				contours,
 				i,
 				cntColor,
@@ -500,7 +500,7 @@ if(parentShape == 'Triangle'){
 			/* font border */
 
  			cv.putText(
- 				src,
+ 				tempSrc,
 				labelText,
 				org,
 				fontFace,
@@ -511,7 +511,7 @@ if(parentShape == 'Triangle'){
 
 			/* put label on detected shape */
  			cv.putText(
- 				src,
+ 				tempSrc,
  				labelText,
 				org,
 				fontFace,
@@ -532,7 +532,7 @@ else {
 	}
 
 	/* display output on output-canvas */
-	cv.imshow('output-canvas', src);
+	cv.imshow('output-canvas', tempSrc);
 
 	contours.delete();
 	hierarchy.delete();
