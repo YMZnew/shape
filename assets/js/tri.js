@@ -361,7 +361,7 @@ function detectShapeWithColor(img) {
 	cv.Canny(tempSrc, tempSrc, 46, 101, 3, true);
 
 	// /* morphological operation (dilate) */
-	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
+	const M = cv.Mat.ones(3, 3, cv.CV_8U);
 	// const anchor = new cv.Point(-1, -1);
 	// cv.dilate(
 	// 	src,
