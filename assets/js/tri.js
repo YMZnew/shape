@@ -354,11 +354,11 @@ function detectShapeWithColor(img) {
 	//cv.GaussianBlur(tempSrc, tempSrc, kernelSize, 0, 0, cv.BORDER_DEFAULT);
 
 	/* convert src to grayscale image */
-	//cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
+	cv.cvtColor(tempSrc, tempSrc, cv.COLOR_BGR2GRAY, 0);
 
 	/* canny edge detection */
 	// cv.Canny(src, src, 20, 80, 3, true);
-	cv.Canny(tempSrc, tempSrc, 46, 101, 3, false);
+	cv.Canny(tempSrc, tempSrc, 46, 101, 3, true);
 
 	// /* morphological operation (dilate) */
 	// const M = cv.Mat.ones(3, 3, cv.CV_8U);
@@ -391,7 +391,7 @@ function detectShapeWithColor(img) {
 	// );
 
 	/* simple thresholding */
-	cv.threshold(tempSrc, tempSrc, 245, 255, cv.THRESH_BINARY);
+	//cv.threshold(tempSrc, tempSrc, 245, 255, cv.THRESH_BINARY);
 
 	/* find contours */
 	let contours = new cv.MatVector();
