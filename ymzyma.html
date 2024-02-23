@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Color Tracking with Bounding Rectangles (OpenCV.js)</title>
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+<body>
+  <h1>Red Color Tracking with Bounding Rectangles (OpenCV.js)</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="outputCanvas" width="640" height="480"></canvas>
+
+  <script type="text/javascript">
+    let video, outputCanvas, outputCtx;
+
+    function onOpenCvReady() {
+      video = document.getElementById('video');
+      outputCanvas = document.getElementById('outputCanvas');
+      outputCtx = outputCanvas.getContext('2d');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch((err) => console.error('Error accessing webcam:', err));
+
+      video.addEventListener('loadeddata', onVideoLoaded);
+    }
+
+    function onVideoLoaded() {
+      let videoWidth = video.videoWidth;
+      let videoHeight = video.videoHeight;
+
+      outputCanvas.width = videoWidth;
+      outputCanvas.height = videoHeight;
+
+      requestAnimationFrame(processVideo);
+    }
+
+    function processVideo() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        outputCtx.drawImage(video, 0, 0, outputCanvas.width, outputCanvas.height);
+        let imageData = outputCtx.getImageData(0, 0, outputCanvas.width, outputCanvas.height);
+
+        // Convert the image data to an OpenCV mat
+        let src = cv.matFromImageData(imageData);
+        let hsv = new cv.Mat();
+        cv.cvtColor(src, hsv, cv.COLOR_RGBA2RGB);
+        cv.cvtColor(hsv, hsv, cv.COLOR_RGB2HSV);
+
+        // Define the lower and upper bounds for the red color range
+        let lower = new cv.Scalar(160, 100, 100);
+        let upper = new cv.Scalar(180, 255, 255);
+
+        // Check if the HSV of the frame is within the lower or upper red range
+        let redMask = new cv.Mat();
+        cv.inRange(hsv, lower, upper, redMask);
+
+        // Draw rectangular bounded lines on the detected red area
+        let contours = new cv.MatVector();
+        let hierarchy = new cv.Mat();
+        cv.findContours(redMask, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE);
+
+        for (let i = 0; i < contours.size(); i++) {
+          let contour = contours.get(i);
+          let area = cv.contourArea(contour);
+
+          if (area > 300) { // to remove the noise
+            // Constructing the size of boxes to be drawn around the detected red area
+            let rect = cv.boundingRect(contour);
+            cv.rectangle(src, rect, [0, 0, 255, 255], 2);
+          }
+        }
+
+        // Display the result on the output canvas
+        cv.imshow(outputCanvas, src);
+
+        // Clean up
+        src.delete();
+        hsv.delete();
+        redMask.delete();
+        contours.delete();
+        hierarchy.delete();
+      }
+
+      requestAnimationFrame(processVideo);
+    }
+  </script>
+</body>
+</html>
