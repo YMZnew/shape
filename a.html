@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Tracking with Bounding Rectangles</title>
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+<body>
+  <h1>Color Tracking with Bounding Rectangles</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="outputCanvas" width="640" height="480"></canvas>
+
+  <script type="text/javascript">
+    let video, outputCanvas, outputCtx, src, hsv, yellowToRed, contours;
+
+    function onOpenCvReady() {
+      video = document.getElementById('video');
+      outputCanvas = document.getElementById('outputCanvas');
+      outputCtx = outputCanvas.getContext('2d');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch((err) => console.error('Error accessing webcam:', err));
+
+      video.addEventListener('loadeddata', onVideoLoaded);
+    }
+
+    function onVideoLoaded() {
+      let videoWidth = video.videoWidth;
+      let videoHeight = video.videoHeight;
+
+      outputCanvas.width = videoWidth;
+      outputCanvas.height = videoHeight;
+
+      src = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC4);
+      hsv = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC3);
+      yellowToRed = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC1);
+      contours = new cv.MatVector();
+
+      requestAnimationFrame(processVideo);
+    }
+
+    function processVideo() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        outputCtx.drawImage(video, 0, 0, outputCanvas.width, outputCanvas.height);
+        let imageData = outputCtx.getImageData(0, 0, outputCanvas.width, outputCanvas.height);
+
+        // Convert the image data to an OpenCV mat
+        src.data.set(imageData.data);
+        cv.cvtColor(src, hsv, cv.COLOR_RGBA2RGB);
+        cv.cvtColor(hsv, hsv, cv.COLOR_RGB2HSV);
+
+        // Define the lower and upper bounds for the yellow to red color range
+         cv.inRange(hsv, new cv.Scalar(10, 100, 100), new cv.Scalar(30, 255, 255), yellowToRed);
+
+        // Find contours
+        cv.findContours(yellowToRed, contours, new cv.Mat(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+        // Draw bounding rectangles around contours
+        for (let i = 0; i < contours.size(); i++) {
+          let rect = cv.boundingRect(contours.get(i));
+          outputCtx.beginPath();
+          outputCtx.rect(rect.x, rect.y, rect.width, rect.height);
+          outputCtx.lineWidth = 2;
+          outputCtx.strokeStyle = 'red';
+          outputCtx.stroke();
+        }
+
+        // Display the result on the output canvas
+        cv.imshow(outputCanvas, yellowToRed);
+
+        src.delete();
+        hsv.delete();
+        yellowToRed.delete();
+        contours.delete();
+      }
+
+      requestAnimationFrame(processVideo);
+    }
+  </script>
+</body>
+</html>
