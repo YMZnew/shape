@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Tracking with OpenCV.js</title>
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+<body>
+  <h1>Color Tracking with OpenCV.js</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="outputCanvas" width="640" height="480"></canvas>
+
+  <script type="text/javascript">
+    let video, outputCanvas, outputCtx, src, dst, yellowToRed;
+
+    function onOpenCvReady() {
+      alert("YMZ");
+      video = document.getElementById('video');
+      outputCanvas = document.getElementById('outputCanvas');
+      outputCtx = outputCanvas.getContext('2d');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch((err) => console.error('Error accessing webcam:', err));
+
+      video.addEventListener('loadeddata', onVideoLoaded);
+    }
+
+    function onVideoLoaded() {
+      let videoWidth = video.videoWidth;
+      let videoHeight = video.videoHeight;
+
+      outputCanvas.width = videoWidth;
+      outputCanvas.height = videoHeight;
+
+      src = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC4);
+      dst = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC1);
+      yellowToRed = new cv.Mat(videoHeight, videoWidth, cv.CV_8UC1);
+
+      requestAnimationFrame(processVideo);
+    }
+
+    function processVideo() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        outputCtx.drawImage(video, 0, 0, video.width, video.height);
+        let imageData = outputCtx.getImageData(0, 0, video.width, video.height);
+
+        // Convert the image data to an OpenCV mat
+        src.data.set(imageData.data);
+        cv.cvtColor(src, src, cv.COLOR_RGBA2BGR);
+
+        // Define the lower and upper bounds for the yellow to red color range
+        cv.inRange(src, new cv.Scalar(0, 100, 100, 0), new cv.Scalar(40, 255, 255, 255), yellowToRed);
+
+        // Display the result on the output canvas
+        cv.imshow(outputCanvas, yellowToRed);
+
+        src.delete();
+        yellowToRed.delete();
+      }
+
+      requestAnimationFrame(processVideo);
+    }
+  </script>
+</body>
+</html>
